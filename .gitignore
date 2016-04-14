@@ -1,7 +1,7 @@
 /vendor
 /node_modules
 /backups
-/public/*
+/public/images/*
 /public/storage
 Homestead.yaml
 Homestead.json
