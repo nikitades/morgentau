@@ -1,0 +1,335 @@
+/* Fonts: */
+
+@font-face {
+  font-family: Fira Sans UltraLight;
+  src: url('/fonts/FiraSans-UltraLight.otf');
+}
+
+@font-face {
+  font-family: Fira Sans Boold;
+  src: url('/fonts/FiraSans-Bold.otf');
+}
+
+@font-face {
+  font-family: Fira Sans Book;
+  src: url('/fonts/FiraSans-Book.otf');
+}
+
+@font-face {
+  font-family: Fira Sans LightItalic;
+  src: url('/fonts/FiraSans-LightItalic.otf');
+}
+
+@font-face {
+  font-family: Fira Sans BookItalic;
+  src: url('/fonts/FiraSans-BookItalic.otf');
+}
+
+/* Useful snippets: */
+
+.buffer-25 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.buffer-50 {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.inline-holder {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.shadowed-light {
+  text-shadow: -2px 1px 2px rgba(0,0,0,0.4);
+}
+
+.shadowed {
+  text-shadow: -2px 1px 2px rgba(0,0,0,0.7);
+}
+
+.top-box {
+  box-shadow: inset 0 10px 10px -7px rgba(0, 0, 0, 0.4);
+}
+
+.left-box {
+  box-shadow: inset 7px 0 9px -7px rgba(0,0,0,0.4);
+}
+
+.right-box {
+  box-shadow: inset -7px 0 9px -7px rgba(0,0,0,0.4);
+}
+
+.bottom-box {
+  box-shadow: inset 0 -7px 9px -7px rgba(0,0,0,0.4);
+}
+
+.alert-nice {
+  padding-left: 30px;
+  margin: 30px 0;
+}
+
+/* Wysiwyg classes: */
+
+.left {
+  float: left;
+  margin: 0 20px 20px 0;
+}
+
+.right {
+  float: right;
+  margin: 0 0 20px 20px;
+}
+
+/* Defaults: */
+
+body {
+  font: 21.6px 'Fira Sans Book';
+  background: whitesmoke;
+}
+
+h1 {
+  font: 2.1em 'Fira Sans UltraLight';
+}
+
+h2 {
+  font: 1.75em 'Fira Sans Boold';
+}
+
+h3 {
+  font: 1.4em 'Fira Sans UltraLight';
+}
+
+a {
+  transition: text-shadow 0.25s;
+  color: #3f3f3f;
+  text-decoration: none;
+}
+
+a:hover {
+  color: inherit;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:focus {
+  text-decoration: none;
+}
+
+p.label {
+  font: 1.333em 'Fira Sans UltraLight';
+  color: inherit;
+  padding: 0;
+}
+
+/* General styles: */
+
+#document {
+  min-width: 939px;
+  padding: 0;
+  overflow: hidden;
+  overflow: hidden;
+}
+
+#content {
+  padding-top: 160px;
+}
+
+.body:after {
+  content: '';
+  clear: both;
+  display: block;
+  width: 100%;
+  height: 0;
+}
+
+.body a {
+  opacity: 0.85;
+  text-decoration: underline;
+}
+
+.body a:hover {
+  opacity: 1;
+}
+
+/* Header: */
+
+#header {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+#header #bar {
+  width: 100%;
+  height: 80px;
+  background: #ffffff;
+  font: 1em 'Fira Sans UltraLight';
+}
+
+#header #bar > div {
+  padding-left: 60px;
+  padding-top: 25px;
+  background-size: auto 40px;
+  background-repeat: no-repeat;
+}
+
+#header #bar > div > p {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 7px 0 0 10px;
+}
+
+#header #bar #header-phones {
+  //margin-left: 80px;
+  background-position: 0 17px;
+  float: left;
+}
+
+#header #bar #header-phones .icon {
+  background: url('/images/phone-icon.svg') no-repeat center center / auto 40px;
+  display: inline-block;
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  float: left;
+  opacity: 0.7;
+}
+
+#header #bar #header-addresses {
+  margin-right: 80px;
+  background-position: 0 20px;
+  float: right;
+  padding-left: 50px;
+}
+
+#header #bar #header-addresses .icon {
+  background: url('/images/pin-icon.svg') no-repeat center center / auto 40px;
+  display: inline-block;
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  float: left;
+  opacity: 0.7;
+}
+
+/* Slider: */
+
+#slider {
+  height: 400px;
+  width: 100%;
+  background: url('/images/slide-image.jpg') no-repeat center center / cover;
+  box-shadow: 0 0 10px 4px rgba(0,0,0,0.3);
+}
+
+#credentials {
+  width: 100%;
+  text-align: center;
+  padding-top: 150px;
+}
+
+#credentials .name {
+  font: 2.1em 'Fira Sans Boold';
+  text-transform: uppercase;
+  color: white;
+}
+
+#credentials .rank {
+  font: 1.4em 'Fira Sans UltraLight';
+  color: white;
+}
+
+/* Menu: */
+
+#header #menu {
+  height: 80px;
+  padding-top: 10px;
+}
+
+#header #menu ul {
+  margin: 0;
+  padding: 0;
+}
+
+#header #menu ul li {
+  float: left;
+  list-style: none;
+  padding: 0 5px;
+  text-align: center;
+}
+
+#header #menu ul li a {
+  font: 1em 'Fira Sans Boold';
+  text-transform: uppercase;
+  color: #ffffff;
+  transition: text-shadow 0.3s;
+}
+
+#header #menu ul li.sel a {
+  color: #c0b7bc;
+}
+
+#header #menu ul li a:hover {
+  text-shadow: -2px 1px 5px rgba(0,0,0,1);
+}
+
+/* Footer: */
+
+#footer {
+  background: #FFFFFF;
+  height: 370px;
+  padding: 50px 0;
+}
+
+#footer .address, #footer .phones {
+  padding: 15px 50px;
+  width: 49.999%;
+  float: left;
+  font-size: 1.15em;
+}
+
+#footer .address {
+  width: 49.999%;
+  text-align: right;
+  border-right: 1px solid #282828;
+}
+
+#footer #copyrights {
+  font-size: 0.8em;
+  text-align: center;
+  margin: 25px 0 0;
+}
+
+#footer #author {
+  font-size: 0.8em;
+  text-align: center;
+  margin: 15px 0 0;
+}
+
+#footer #author {
+  font-size: 0.8em;
+  text-align: center;
+  margin: 15px 0 0;
+}
+
+#footer #author a {
+  display: inline-block;
+  border-bottom: 1px dotted #202020;
+}

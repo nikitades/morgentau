@@ -1,0 +1,119 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\CreateNewsItemRequest;
+use App\Text;
+use Illuminate\Http\Request;
+
+use App\NewsItem;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+class NewsController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CreateNewsItemRequest $request)
+    {
+        $item = new NewsItem($request->all());
+        $item->save();
+        $ic = new ImagesController();
+        $ic->saveImages($request, $item);
+        return $this->cleverRedirect($request, '/admin/news');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($url)
+    {
+        $item = NewsItem::where('newsitem_url', $url)->firstOrFail();
+        return view('pages.newsItem', compact('item'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $item = NewsItem::findOrFail($id);
+        $item->fill($request->all())->save();
+        $ic = new ImagesController();
+        $ic->saveImages($request, $item);
+        return $ic->reposition($request, $item, '/admin/news');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $item = NewsItem::findOrFail($id);
+        $item->delete();
+        return redirect('/admin/news');
+    }
+
+    /**
+     * Inverts the value of the 'hot' field of the given newsitem.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function makeHot($id)
+    {
+        $item = NewsItem::findOrFail($id);
+        if ($item->hot) {
+            $item->hot = false;
+        } else {
+            $item->hot = true;
+        }
+        $item->save();
+        return redirect('/admin/news');
+    }
+}
