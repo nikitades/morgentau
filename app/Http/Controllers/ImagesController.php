@@ -57,8 +57,21 @@ class ImagesController extends Controller
     {
         //Exists in cache folder? Then return the cached file:
         if ($filename = $this->checkIfExists($name, $ext)) {
-            $content = file_get_contents($this->cache_folder.'/'.$filename);
-            return Image::make($content)->response();
+            $filename = $this->cache_folder . '/' . $filename;
+            $content = file_get_contents($filename);
+            $modifiedTime = filemtime($filename);
+            $modifiedHeader = gmdate('D, d M Y H:i:s', filemtime($filename)).' GMT';
+
+            $headers = getallheaders();
+            if (isset($headers['If-Modified-Since']) && (strtotime($headers['If-Modified-Since']) == $modifiedTime)) {
+                return header('Last-Modified: '.gmdate('D, d M Y H:i:s', $modifiedTime).' GMT', true, 304);
+            } else {
+                header("Cache-control: public; max-age=31536000");
+                header("Pragma: cache");
+                header("Expires: " . gmdate("D, d M Y H:i:s", time() + 60 * 60 * 24 * 365) . " GMT");
+                header('Last-Modified: ' . $modifiedHeader);
+                return Image::make($content)->response();
+            }
         }
 
         //If does not exist, build the file, cache and return:
@@ -102,6 +115,10 @@ class ImagesController extends Controller
                             header("Content-type: " . $image->mime);
                             header("Accept-Ranges: bytes");
                             header("Content-length: " . ($image->size));
+                            header('Pragma: public');
+                            header('Cache-Control: max-age=86400');
+                            header('Expires: '. gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
+                            header('Content-Type: image/png');
                             die($image->content);
                         case 'defined':
                             $size = preg_split('/[:x-|]/', $param['size']);
