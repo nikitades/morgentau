@@ -108,7 +108,12 @@ class ImagesController extends Controller
         } else {
             $errors[] = $filepath;
         }
+        $entity = $image->entity;
+        $originalImage = $entity::where('image_id', $image->id)->first();
+        $images = $entity::where('parent_id', $originalImage->parent_id)->where('id', '!=', $originalImage->id)->get();
+        reorder_items($images);
         $image->delete();
+
         if (sizeof($not_removed)) {
             Session::flash('error', Lang::get('global.some-files-were-not-found') . ' (' . implode(', ', $not_removed) . ')');
         }
@@ -170,12 +175,11 @@ class ImagesController extends Controller
             $size = getimagesize($file->getPathname());
             $image->width = $size[0];
             $image->height = $size[1];
-
+            $image->entity = $entity;
             //saving the file to folder
             if (!$file = $file->move('.' . Image::IMAGES_STASH, $image->filename)) {
                 return redirect()->back()->withErrors([Lang::get('global.cant-save-image')]);
             }
-
             //fetching the II object to work with
             $interImage = InterImage::make('.' . Image::IMAGES_STASH . '/' . $image->filename);
 
@@ -228,18 +232,18 @@ class ImagesController extends Controller
         foreach ($listToReassign as $key => $val) {
             if (!$val) continue;
             list( , $entity, $id) = explode(':', $key);
-            $image = $entity::find($id);
+            $image = $entity::where('image_id', $id)->first();
             $imageOriginalPos = $image->pos;
             $image->pos = $val;
             $image->save();
             if ($imageOriginalPos < $val) {
-                $imagesBelow = $entity::where('pos', '<=', $val)->where('parent_id', $item->id)->where('id', '!=', $id)->orderBy('pos')->get();
+                $imagesBelow = $entity::where('pos', '<=', $val)->where('parent_id', $item->id)->where('image_id', '!=', $id)->orderBy('pos')->get();
                 foreach ($imagesBelow as $imageToIncrement) {
                     $imageToIncrement->pos--;
                     $imageToIncrement->save();
                 }
             } else {
-                $imagesAbove = $entity::where('pos', '>=', $val)->where('parent_id', $item->id)->where('id', '!=', $id)->orderBy('pos')->get();
+                $imagesAbove = $entity::where('pos', '>=', $val)->where('parent_id', $item->id)->where('image_id', '!=', $id)->orderBy('pos')->get();
                 foreach ($imagesAbove as $imageToIncrement) {
                     $imageToIncrement->pos++;
                     $imageToIncrement->save();

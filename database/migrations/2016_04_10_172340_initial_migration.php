@@ -45,6 +45,7 @@ class InitialMigration extends Migration
             $table->string('mime');
             $table->string('name');
             $table->string('basename');
+            $table->string('entity');
             $table->integer('width');
             $table->integer('height');
             $table->integer('size');

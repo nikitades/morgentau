@@ -58,7 +58,7 @@ class PagesController extends Controller
         $pageTree->save();
         ImagesController::saveImages($request, $item);
         FilesController::saveFiles($request, $item);
-        return $this->cleverRedirect($request, '/admin/pages');
+        return clever_redirect($request, '/admin/pages');
     }
 
     /**
@@ -108,7 +108,7 @@ class PagesController extends Controller
         ImagesController::saveImages($request, $item);
         FilesController::saveFiles($request, $item);
         Session::flash('success-message', Lang::get('global.successfully-saved'));
-        return $this->cleverRedirect($request, '/admin/pages');
+        return clever_redirect($request, '/admin/pages');
     }
 
     /**

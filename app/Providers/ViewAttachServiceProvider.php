@@ -25,8 +25,8 @@ class ViewAttachServiceProvider extends ServiceProvider
 
             $settings = Setting::all();
             $settings_list = [];
-            foreach ($settings as $settings) {
-                $settings_list[$settings->code] = $settings->text_content;
+            foreach ($settings as $setting) {
+                $settings_list[$setting->code] = $setting->text_content;
             }
             $settings = $settings_list;
 
