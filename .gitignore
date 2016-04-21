@@ -2,7 +2,11 @@
 /node_modules
 /backups
 /public/images/*
-/public/storage
+/public/files/*
+/public/build/*
+/public/css/*
+/public/js/*
+/public/fonts/*
 Homestead.yaml
 Homestead.json
 .env
