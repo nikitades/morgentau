@@ -17,16 +17,18 @@
         <a href="{{ $page->url }}">{{ $page->url }}</a>
     </div>
     <div class="item--controls">
-        {!! Form::open(['action' => ['PagesController@move', $page->id, 'up'], 'method' => 'delete']) !!}
-        <button type="submit" class="btn btn-xs btn-link">
-            <i class="glyphicon glyphicon-arrow-up"></i>
-        </button>
-        {!! Form::close() !!}
-        {!! Form::open(['action' => ['PagesController@move', $page->id,  'down'], 'method' => 'delete']) !!}
-        <button type="submit" class="btn btn-xs btn-link">
-            <i class="glyphicon glyphicon-arrow-down"></i>
-        </button>
-        {!! Form::close() !!}
+        @if ($page->real_level != 0)
+            {!! Form::open(['action' => ['PagesController@move', $page->id, 'up'], 'method' => 'delete']) !!}
+            <button type="submit" class="btn btn-xs btn-link">
+                <i class="glyphicon glyphicon-arrow-up"></i>
+            </button>
+            {!! Form::close() !!}
+            {!! Form::open(['action' => ['PagesController@move', $page->id,  'down'], 'method' => 'delete']) !!}
+            <button type="submit" class="btn btn-xs btn-link">
+                <i class="glyphicon glyphicon-arrow-down"></i>
+            </button>
+            {!! Form::close() !!}
+        @endif
         <a href="/admin/pages/{{ $page->id }}/edit" class="btn btn-xs btn-link">
             <i class="glyphicon glyphicon-edit"></i>
         </a>

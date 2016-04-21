@@ -3,7 +3,7 @@
     <div class="col-sm-12 attached-files-list">
         @foreach($files['list'] as $file)
             <div class="attached-file <?= $file->ext ?>">
-                <a href="{{ $file->url() }}">{{ $file->original_name }}</a>
+                <a href="{{ $file->url() }}">{{ $file->filename }}</a>
                 <div class="attached-file--control">
                     <a href="{{ $file->deleteUrl() }}" class="attached-file--delete red" onclick="return confirm('Вы уверены?')">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>

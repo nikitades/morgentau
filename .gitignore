@@ -7,3 +7,4 @@ Homestead.yaml
 Homestead.json
 .env
 .idea
+/database/migrations/2016_04_16_145928_insert_default_admin.php

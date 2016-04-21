@@ -18,8 +18,16 @@ class PageFile extends File
         'pos',
     ];
 
-    public function scopeAttachmentTo($query, $item)
+    public function scopeAttachmentTo($query, $id)
     {
-        return $query->where('parent_id', $item->id)->orderBy('pos')->select('id', 'ext', 'name', 'pos', 'original_name');
+        $select_fields = [
+            'files.id',
+            'files.name',
+            'files.filename'
+        ];
+        return $query->where('parent_id', $id)
+            ->orderBy('pos')
+            ->join('files', 'page_files.file_id', '=', 'files.id')
+            ->select($select_fields);
     }
 }

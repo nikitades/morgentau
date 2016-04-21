@@ -124,7 +124,7 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
      * Deleting images:
      */
 
-    Route::get('images/delete/{name}', 'ImagesController@destroy');
+    Route::get('images/delete/{id}', 'ImagesController@destroy');
 
     /*
      * Deleting files:
@@ -133,19 +133,6 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::get('files/delete/{name}', 'FilesController@destroy');
 
 });
-
-/*
- * Images:
- */
-
-Route::get('images/{name}.{ext}', 'ImagesController@show');
-
-/*
- * Files:
- */
-
-
-Route::get('files/{name}', 'FilesController@show');
 
 /*
  * Pages:

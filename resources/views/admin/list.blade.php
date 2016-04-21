@@ -1,8 +1,9 @@
 @extends('admin.main')
 
 @section('content')
-        @yield('headers')
-        @yield('items')
+    @yield('headers')
+    @include('partials.errors')
+    @yield('items')
 @stop
 
 

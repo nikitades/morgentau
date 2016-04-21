@@ -13,5 +13,12 @@
 
 return [
     'site-title' => 'Измените название',
-    'exit' => 'Выход'
+    'exit' => 'Выход',
+    'cant-save-image' => 'Не удалось сохранить изображение!',
+    'cant-save-file' => 'Не удалось сохранить файл!',
+    'file-already-exists' => 'Такой файл уже существует!',
+    'could-not-remove-file' => 'Не удалось удалить файл!',
+    'some-files-were-not-found' => 'Некоторые файлы не были найдены!',
+    'successfully-removed' => 'Успешно удалено!',
+    'successfully-saved' => 'Успешно сохранено!',
 ];

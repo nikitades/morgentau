@@ -4,7 +4,7 @@ namespace App;
 
 use App\Image;
 
-class PageImage extends Image
+class PageSliderImage extends Image
 {
     protected $fillable = [
         'parent_id',
@@ -20,8 +20,8 @@ class PageImage extends Image
     public function scopeAttachmentTo($query, $id)
     {
         $select_fields = [
-            'page_images.id',
-            'page_images.pos',
+            'page_slider_images.id',
+            'page_slider_images.pos',
             'images.name',
             'images.filename'
         ];
@@ -31,7 +31,7 @@ class PageImage extends Image
         }
         return $query->where('parent_id', $id)
             ->orderBy('pos')
-            ->join('images', 'page_images.image_id', '=', 'images.id')
+            ->join('images', 'page_slider_images.image_id', '=', 'images.id')
             ->select($select_fields);
     }
 }

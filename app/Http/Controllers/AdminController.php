@@ -158,7 +158,7 @@ class AdminController extends Controller
                 $entity = 'App\\'.$entityText;
                 $images[] = [
                     'name'      => $name,
-                    'list'      => $entity::attachmentTo($item)->get(),
+                    'list'      => $entity::attachmentTo($item->id)->get(),
                     'entity'    => $entityText
                 ];
             }

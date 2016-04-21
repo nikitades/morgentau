@@ -3,12 +3,13 @@
     <div class="col-sm-12 attached-images-list">
         @foreach($images['list'] as $image)
             <div class="attached-image">
-                <a href="{{ $image->url() }}"><img src="{{ $image->url('lt', 100) }}" alt=""></a>
+                <a href="{{ $image->url() }}" target="_blank"><img src="{{ $image->url('h', 100) }}" alt=""></a>
                 <p class="attached-image--label">
-                    {{ $image->name }}.{{ $image->ext }}
+                    {{ $image->name }}
                 </p>
                 <div class="attached-image--control">
-                    <select name="reposition_{{ $image->name }}" onchange="this.form.submit()">
+                    {{--<select name="reposition_{{ $image->name }}" onchange="this.form.submit()">--}}
+                    <select name="reposition:{{ get_class($image) }}:{{ $image->id }}" onchange="$('.btn-stay').trigger('click');">
                         @foreach($images['list'] as $option)
                             <option value="{{ $option->pos == $image->pos ? '' : $option->pos }}" {{ $option->pos == $image->pos ? 'selected="selected"' : '' }}>{{ $option->pos }}</option>
                         @endforeach

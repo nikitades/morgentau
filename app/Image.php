@@ -6,17 +6,42 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
-    public function url($type = false, $value = false)
+
+    const IMAGE_MAX_FILESIZE = 8192;
+    const IMAGE_PREFIX = 'image';
+    const IMAGES_FOLDER = '/images';
+    const IMAGES_STASH = '/images/stash';
+    const FILENAME_FIELD = 'filename';
+    const REPOSITION_TAG = 'reposition';
+
+    public static $allowed_types = [
+        'jpeg',
+        'png',
+        'gif'
+    ];
+
+    public static $dimensions = [
+        'h:100',
+        'h:500'
+    ];
+
+    public static $required_images_folders = [
+        self::IMAGES_FOLDER,
+        self::IMAGES_STASH,
+    ];
+
+    public function url($type = false, $index = false)
     {
-        if ($type && $value) {
-            return '/images/'.$this->name.'.'.$this->ext.'?'.$type.'='.$value;
+        if ($type && $index) {
+            $filename = 'filename_' .$type. $index;
+            return self::IMAGES_STASH . '/' . $this->$filename;
         } else {
-            return '/images/'.$this->name.'.'.$this->ext;
+            return self::IMAGES_STASH . '/' . $this->filename;
         }
     }
 
     public function deleteUrl()
     {
-        return '/images/delete/'.$this->name;
+        return '/images/delete/' . $this->id;
     }
 }

@@ -6,8 +6,8 @@ use App\Image;
 
 class NewsImage extends Image
 {
-    public function scopeAttachmentTo($query, $item)
+    public function scopeAttachmentTo($query, $id)
     {
-        return $query->where('parent_id', $item->id)->orderBy('pos')->select('id', 'ext', 'name', 'pos');
+        return $query->where('parent_id', $id)->orderBy('pos')->select('id', 'pos');
     }
 }

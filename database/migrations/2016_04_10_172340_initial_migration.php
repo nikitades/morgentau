@@ -12,6 +12,7 @@ class InitialMigration extends Migration
      */
     public function up()
     {
+
         Schema::table('users', function($table) {
             $table->integer('admin');
         });
@@ -37,36 +38,62 @@ class InitialMigration extends Migration
             $table->timestamps();
         });
 
-        Schema::create('page_images', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent_id')->unsigned();
             $table->integer('pos');
             $table->string('ext');
             $table->string('mime');
             $table->string('name');
+            $table->string('basename');
             $table->integer('width');
             $table->integer('height');
             $table->integer('size');
-            $table->binary('content');
+            $table->string('filename');
+            $table->string('filename_h100');
+            $table->string('filename_h500');
             $table->timestamps();
-            $table->foreign('parent_id')->references('id')->on('pages')->onDelete('cascade');
         });
-        DB::statement('ALTER TABLE page_images CHANGE content content LONGBLOB');
 
-        Schema::create('page_files', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent_id')->unsigned();
-            $table->foreign('parent_id')->references('id')->on('pages')->onDelete('cascade');
-            $table->integer('pos');
             $table->string('ext');
             $table->string('mime');
             $table->string('name');
-            $table->string('original_name');
+            $table->string('basename');
             $table->integer('size');
-            $table->binary('content');
+            $table->string('filename');
             $table->timestamps();
         });
-        DB::statement('ALTER TABLE page_files CHANGE content content LONGBLOB');
+
+        Schema::create('page_images', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('pos');
+            $table->integer('parent_id')->unsigned();
+            $table->foreign('parent_id')->references('id')->on('pages')->onDelete('cascade');
+            $table->integer('image_id')->unsigned();
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
+            $table->timestamps();
+        });
+
+        Schema::create('page_slider_images', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('pos');
+            $table->integer('parent_id')->unsigned();
+            $table->foreign('parent_id')->references('id')->on('pages')->onDelete('cascade');
+            $table->integer('image_id')->unsigned();
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
+            $table->timestamps();
+        });
+
+        Schema::create('page_files', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('pos');
+            $table->integer('parent_id')->unsigned();
+            $table->foreign('parent_id')->references('id')->on('pages')->onDelete('cascade');
+            $table->integer('file_id')->unsigned();
+            $table->foreign('file_id')->references('id')->on('files')->onDelete('cascade');
+            $table->timestamps();
+        });
 
         Schema::create('page_trees', function (Blueprint $table) {
             $table->increments('id');
@@ -120,19 +147,13 @@ class InitialMigration extends Migration
 
         Schema::create('news_images', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('pos');
             $table->integer('parent_id')->unsigned();
             $table->foreign('parent_id')->references('id')->on('news')->onDelete('cascade');
-            $table->integer('pos');
-            $table->string('ext');
-            $table->string('mime');
-            $table->string('name');
-            $table->integer('width');
-            $table->integer('height');
-            $table->integer('size');
-            $table->binary('content');
+            $table->integer('image_id')->unsigned();
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
             $table->timestamps();
         });
-        DB::statement('ALTER TABLE news_images CHANGE content content LONGBLOB');
 
         Schema::create('faqs', function (Blueprint $table) {
             $table->increments('id');
@@ -143,18 +164,6 @@ class InitialMigration extends Migration
             $table->string('email');
             $table->timestamps();
         });
-
-        Schema::create('files', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('pos');
-            $table->string('ext');
-            $table->string('mime');
-            $table->string('name');
-            $table->integer('size');
-            $table->binary('content');
-            $table->timestamps();
-        });
-        DB::statement('ALTER TABLE files CHANGE content content LONGBLOB');
 
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
@@ -189,9 +198,9 @@ class InitialMigration extends Migration
             $table->dropColumn('admin');
         });
         Schema::drop('page_images');
+        Schema::drop('page_slider_images');
         Schema::drop('page_files');
         Schema::drop('page_trees');
-        Schema::drop('pages');
         Schema::drop('actions');
         Schema::drop('views');
         Schema::drop('texts');
@@ -201,5 +210,7 @@ class InitialMigration extends Migration
         Schema::drop('files');
         Schema::drop('settings');
         Schema::drop('backups');
+        Schema::drop('images');
+        Schema::drop('pages');
     }
 }

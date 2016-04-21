@@ -38,7 +38,8 @@ class Page extends Model
     public static function images()
     {
         return [
-            'Картинка страницы' => 'PageImage'
+            'Картинка страницы' => 'PageImage',
+            'Изображение слайдера' => 'PageSliderImage',
         ];
     }
 
@@ -84,6 +85,7 @@ class Page extends Model
      */
     public static function flatten($page, $output)
     {
+        if (!$page) return [Page::firstOrCreate(['is_root' => 1, 'real_level' => -1, 'name' => Page::ROOT_PAGE_NAME, 'url' => ''])];
         $page->name = str_repeat('&nbsp;&nbsp;', $page->real_level > 0 ? $page->real_level : 0) . ($page->real_level > 0 ? '└' : '') . str_repeat('─', $page->real_level > 0 ? $page->real_level : 0) . ' ' . $page->name;
         $output[] = $page;
         if (sizeof($page->children)) {
@@ -101,7 +103,6 @@ class Page extends Model
      */
     public static function tree()
     {
-        Page::firstOrCreate(['is_root' => 1, 'real_level' => -1, 'name' => Page::ROOT_PAGE_NAME, 'url' => '']);
         $tree = Page::buildTree(Page::where('real_level', 0)->first());
         return [$tree];
     }
@@ -113,7 +114,7 @@ class Page extends Model
      */
     public static function flatTree()
     {
-        $tree = Page::buildTree(Page::firstOrCreate(['is_root' => 1, 'real_level' => -1, 'name' => Page::ROOT_PAGE_NAME, 'url' => '']));
+        $tree = Page::buildTree(Page::where('real_level', 0)->first());
         return Page::flatten($tree, []);
     }
 

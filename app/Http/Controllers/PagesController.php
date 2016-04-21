@@ -13,6 +13,8 @@ use App\Page;
 use App\PageTree;
 use App\View;
 use App\Text;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Session;
 
 class PagesController extends Controller
 {
@@ -44,20 +46,18 @@ class PagesController extends Controller
      */
     public function store(Request $request)
     {
-        $page = new Page($request->all());
-        $ancestor = Page::findOrFail($page->parent);
-        $page->real_level = $ancestor->real_level + 1;
-        $pages = Page::where('parent', $page->parent)->get();
-        $page->pos = sizeof($pages) + 1;
-        $page->save();
-        $this->reorderItems(Page::where('parent', $page->parent)->orderBy('pos')->get());
-        $siblings = PageTree::where('ancestor', $page->parent)->get();
-        $pageTree = new PageTree(['ancestor' => $page->parent, 'descendant' => $page->id, 'depth' => $ancestor->real_level + 1, 'pos' => sizeof($siblings) + 1]);
+        $item = new Page($request->all());
+        $ancestor = Page::findOrFail($item->parent);
+        $item->real_level = $ancestor->real_level + 1;
+        $pages = Page::where('parent', $item->parent)->get();
+        $item->pos = sizeof($pages) + 1;
+        $item->save();
+        $this->reorderItems(Page::where('parent', $item->parent)->orderBy('pos')->get());
+        $siblings = PageTree::where('ancestor', $item->parent)->get();
+        $pageTree = new PageTree(['ancestor' => $item->parent, 'descendant' => $item->id, 'depth' => $ancestor->real_level + 1, 'pos' => sizeof($siblings) + 1]);
         $pageTree->save();
-        $ic = new ImagesController();
-        $ic->saveImages($request, $page);
-        $fc = new FilesController();
-        $fc->saveFiles($request, $page);
+        ImagesController::saveImages($request, $item);
+        FilesController::saveFiles($request, $item);
         return $this->cleverRedirect($request, '/admin/pages');
     }
 
@@ -105,11 +105,10 @@ class PagesController extends Controller
         if ($item->parent != $oldParent) $item->pos = sizeof($pages) + 1;
         $item->save();
         if ($item->parent != $oldParent) $this->reorderItems(Page::where('parent', $item->parent)->orderBy('pos')->get());
-        $ic = new ImagesController();
-        $ic->saveImages($request, $item);
-        $fc = new FilesController();
-        $fc->saveFiles($request, $item);
-        return $ic->reposition($request, $item, '/admin/pages');
+        ImagesController::saveImages($request, $item);
+        FilesController::saveFiles($request, $item);
+        Session::flash('success-message', Lang::get('global.successfully-saved'));
+        return $this->cleverRedirect($request, '/admin/pages');
     }
 
     /**

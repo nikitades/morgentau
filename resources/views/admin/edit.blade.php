@@ -10,9 +10,9 @@
     <div class="form-group">
         <div class="col-sm-12">
             <input type="hidden" name="current_url" value="{{ $_SERVER['REQUEST_URI'] }}">
-            <button class="btn btn-success btn-md" name="direction" value="back">Сохранить и назад</button>
+            <button class="btn btn-success btn-md btn-back" name="direction" value="back">Сохранить и назад</button>
             @if ($type == 'edit')
-            <button class="btn btn-success btn-md" name="direction" value="stay">Сохранить</button>
+            <button class="btn btn-success btn-md btn-stay" name="direction" value="stay">Сохранить</button>
             @endif
             <a href="/admin/{{ $entity }}" class="btn btn-default btn-md">Назад</a>
         </div>

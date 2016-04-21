@@ -1,8 +1,8 @@
 <IfModule mod_rewrite.c>
-<IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews
     </IfModule>
+    Options -Indexes
 
     RewriteEngine On
 
@@ -18,4 +18,8 @@
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Hide files and images folders
+#    RewriteRule ^files/ - [F,L]
+#    RewriteRule ^files/stash/ - [F,L]
 </IfModule>

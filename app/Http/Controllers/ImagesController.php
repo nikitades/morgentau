@@ -5,17 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Schema;
-use File;
-use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Lang;
+use App\Image;
+use Illuminate\Support\Facades\Session;
+use Validator;
+use Intervention\Image\Facades\Image as InterImage;
 
 class ImagesController extends Controller
 {
-
-    public $images_folder = './images';
-    public $cache_folder = './images/cache';
-
     /**
      * Display a listing of the resource.
      *
@@ -48,149 +45,15 @@ class ImagesController extends Controller
     }
 
     /**
-     * Display the image by checking the sequence of the models for the unique name.
+     * Currently does nothing.
      *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param $name
+     * @return nothing
+     * @internal param int $id
      */
-    public function show($name, $ext)
+    public function show($name)
     {
-        //Exists in cache folder? Then return the cached file:
-        if ($filename = $this->checkIfExists($name, $ext)) {
-            $filename = $this->cache_folder . '/' . $filename;
-            $content = file_get_contents($filename);
-            $modifiedTime = filemtime($filename);
-            $modifiedHeader = gmdate('D, d M Y H:i:s', filemtime($filename)).' GMT';
-
-            $headers = getallheaders();
-            if (isset($headers['If-Modified-Since']) && (strtotime($headers['If-Modified-Since']) == $modifiedTime)) {
-                return header('Last-Modified: '.gmdate('D, d M Y H:i:s', $modifiedTime).' GMT', true, 304);
-            } else {
-                header("Cache-control: public; max-age=31536000");
-                header("Pragma: cache");
-                header("Expires: " . gmdate("D, d M Y H:i:s", time() + 60 * 60 * 24 * 365) . " GMT");
-                header('Last-Modified: ' . $modifiedHeader);
-                return Image::make($content)->response();
-            }
-        }
-
-        //If does not exist, build the file, cache and return:
-        if (isset($_GET['s'])) {
-            $param = ['name' => 'defined', 'size' => $_GET['s']];
-        } elseif (isset($_GET['lt'])) {
-            $param = [
-                'name' => 'lowerThan',
-                'size' => $_GET['lt']
-            ];
-        } elseif (isset($_GET['bt'])) {
-            $param = [
-                'name' => 'biggerThan',
-                'size' => $_GET['bt']
-            ];
-        } else {
-            $param = false;
-        }
-
-        $modelsList = [];
-        $dir = '../app';
-        if ($modelsDir = opendir($dir)) {
-            while (($file = readdir($modelsDir)) !== false) {
-                if (is_file($dir . '/' . $file)) {
-                    $modelsList[] = pathinfo($dir . '/' . $file)['filename'];
-                }
-            }
-        }
-
-
-        foreach ($modelsList as $model) {
-            $class = 'App\\' . $model;
-            $item = new $class;
-            $item->getTable();
-            if (Schema::hasColumn($item->getTable(), 'name') && Schema::hasColumn($item->getTable(), 'ext')) {
-                $image = $class::where('name', $name)->where('ext', $ext)->first();
-                if ($image) {
-                    switch ($param['name']) {
-                        case false:
-                            file_put_contents($this->cache_folder.'/'.$this->createImageName($image->name, $image->ext, $_GET), $image->content);
-                            header("Content-type: " . $image->mime);
-                            header("Accept-Ranges: bytes");
-                            header("Content-length: " . ($image->size));
-                            header('Pragma: public');
-                            header('Cache-Control: max-age=86400');
-                            header('Expires: '. gmdate('D, d M Y H:i:s \G\M\T', time() + 86400));
-                            header('Content-Type: image/png');
-                            die($image->content);
-                        case 'defined':
-                            $size = preg_split('/[:x-|]/', $param['size']);
-                            $width = intval($size[0]);
-                            $height = intval($size[1]);
-                            $preparedImage =  Image::make($image->content);
-                            file_put_contents($this->cache_folder.'/'.$this->createImageName($image->name, $image->ext, $_GET), $preparedImage->fit($this->sd($width), $this->sd($height))->response()->content());
-                            return $preparedImage->fit($this->sd($width), $this->sd($height))->response();
-                            break;
-                        case 'lowerThan':
-                            $size = intval($param['size']);
-                            $dimension = $image->width > $image->height;
-                            $preparedImage = Image::make($image->content)->resize($dimension ? $this->sd($size) : null, $dimension ? null : $this->sd($size),function ($constraint) {
-                                $constraint->aspectRatio();
-                            });
-                            file_put_contents($this->cache_folder.'/'.$this->createImageName($image->name, $image->ext, $_GET), $preparedImage->response()->content());
-                            return $preparedImage->response();
-                            break;
-                        case 'biggerThan':
-                            $size = intval($param['size']);
-                            $dimension = $image->width > $image->height;
-                            $preparedImage = Image::make($image->content)->resize($dimension ? null : $this->sd($size), $dimension ? $this->sd($size) : null, function ($constraint) {
-                                $constraint->aspectRatio();
-                            });
-                            file_put_contents($this->cache_folder.'/'.$this->createImageName($image->name, $image->ext, $_GET), $preparedImage->response()->content());
-                            return $preparedImage->response();
-                            break;
-
-                    }
-                }
-            }
-        }
-        \App::abort(404);
-    }
-
-    public function checkIfExists($name, $ext)
-    {
-        if (!file_exists($this->images_folder)) {
-            mkdir($this->images_folder);
-        }
-        if (!file_exists($this->cache_folder)) {
-            mkdir($this->cache_folder);
-        }
-        $name = $this->createImageName($name, $ext, $_GET);
-        return file_exists($this->cache_folder.'/'.$name) ? $name : false;
-    }
-
-    public function createImageName($name, $ext, $get)
-    {
-        $par = '';
-        if (isset($get['s'])) {
-            $s = preg_replace('/[-|:]/', 'x', $get['s']);
-            $par = '.s-'.$s;
-        } elseif (isset($get['lt'])) {
-            $par = '.lt-'.$get['lt'];
-        } elseif (isset($get['bt'])) {
-            $par = '.bt-'.$get['bt'];
-        } else {
-            $par = '';
-        }
-        return $name.$par.'.'.$ext;
-    }
-
-    /**
-     * Secure (the) Dimension. Forbids numbers more than 51 characters long.
-     *
-     * @param $int
-     * @return string
-     */
-    protected function sd($int)
-    {
-        return substr($int, 0, 5);
+        //
     }
 
 
@@ -223,12 +86,49 @@ class ImagesController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($name)
+    public function destroy($id)
     {
-        $this->scan($name, function($item) {
-            $item->delete();
-        }, 'image');
-        return redirect()->back();
+        $image = Image::find($id);
+        $errors = [];
+        $not_removed = [];
+        foreach (Image::$dimensions as $dimension) {
+            list($key, $value) = explode(':', $dimension);
+            $filepath = Image::FILENAME_FIELD . '_' . $key . $value;
+            $filepath = '.' . Image::IMAGES_STASH . '/' . $image->$filepath;
+            if (file_exists($filepath)) {
+                if (!unlink($filepath)) $not_removed[] = $filepath;
+            } else {
+                $errors[] = $filepath.' ('.$key.':'.$value.')';
+            }
+        }
+        $filepath = Image::FILENAME_FIELD;
+        $filepath = '.' . Image::IMAGES_STASH . '/' . $image->$filepath;
+        if (file_exists($filepath)) {
+            if (!unlink($filepath)) $not_removed[] = $filepath;
+        } else {
+            $errors[] = $filepath;
+        }
+        $image->delete();
+        if (sizeof($not_removed)) {
+            Session::flash('error', Lang::get('global.some-files-were-not-found') . ' (' . implode(', ', $not_removed) . ')');
+        }
+        if (sizeof($errors)) {
+            return redirect()->back()->withErrors([Lang::get('global.some-files-were-not-found') . ' (' . implode(', ', $errors) . ')']);
+        } else {
+            return redirect()->back()->with('success-message', Lang::get('global.successfully-removed'));
+        }
+    }
+
+    /**
+     * Check if all the required folders exist. Creates if not.
+     */
+    public static function checkRequiredImagesFolders()
+    {
+        foreach (Image::$required_images_folders as $folder) {
+            if (!file_exists('.' . $folder)) {
+                mkdir('.' . $folder);
+            }
+        }
     }
 
     /**
@@ -237,90 +137,119 @@ class ImagesController extends Controller
      * @param $request
      * @param $item
      */
-    public function saveImages($request, $item)
+    public static function saveImages($request, $item)
     {
-        $allowedTypes = [
-            'jpeg',
-            'png',
-            'gif'
-        ];
+        self::checkRequiredImagesFolders();
+        foreach ($request->file() as $imageFieldName => $file) {
 
-        foreach ($request->file() as $name => $file) {
-            if (substr($name, 0, 5) == 'image') {
-
-                $entity = 'App\\' . substr($name, 6);
-                $ext = $file->guessExtension();
-                $mime = $file->getMimeType();
-
-                if (!in_array($ext, $allowedTypes)) {
-                    dd('Прикрепленный файл должнен быть изобажением одного из типов: ' . implode(', ', $allowedTypes));
-                }
-
-                $image = new $entity;
-
-                $existingImages = $entity::where('parent_id', $item->id)->get();
-
-                $image->pos = sizeof($existingImages) + 1;
-                $image->parent_id = $item->id;
-                $ic = new ImagesController();
-                $image->name = $ic->makeReallyUniqueName($entity);
-                $image->ext = $file->getClientOriginalExtension();
-                $image->size = $file->getClientSize();
-                $image->mime = $mime;
-                $image->content = File::get($file);
-
-                $size = getimagesize($file->getPathname());
-
-                $image->width = $size[0];
-                $image->height = $size[1];
-
-                $image->save();
+            if (substr($imageFieldName, 0, 5) == Image::IMAGE_PREFIX) {
+                $entity = 'App\\' . substr($imageFieldName, 6);
+            } else {
+                continue;
             }
+
+            //checking the correct mime
+            $validator = Validator::make($request->all(), [
+                $imageFieldName => 'mimes:' . implode(',', Image::$allowed_types) . '|max:' . Image::IMAGE_MAX_FILESIZE
+            ]);
+
+            if ($validator->fails()) {
+                return clever_redirect($request, '/admin/pages')->withErrors($validator);
+            }
+
+
+            //assigning the fields
+            $image = new Image;
+            $image->ext = $file->getClientOriginalExtension();
+            $image->basename = uniqueName('.' . Image::IMAGES_STASH, 12);
+            $image->name = $file->getClientOriginalName();
+            if (file_exists('.' . Image::IMAGES_STASH . '/' . $image->name)) return redirect()->back()->withErrors([Lang::get('global.file-already-exists')]);
+            $image->filename = $image->basename . '.' . $image->ext;
+            $image->size = $file->getClientSize();
+            $image->mime = $file->getMimeType();
+            $size = getimagesize($file->getPathname());
+            $image->width = $size[0];
+            $image->height = $size[1];
+
+            //saving the file to folder
+            if (!$file = $file->move('.' . Image::IMAGES_STASH, $image->filename)) {
+                return redirect()->back()->withErrors([Lang::get('global.cant-save-image')]);
+            }
+
+            //fetching the II object to work with
+            $interImage = InterImage::make('.' . Image::IMAGES_STASH . '/' . $image->filename);
+
+            //TODO: Probably I'll need the entity-defined images_stash folder and filename_field value. So, may be I will make this controller and every image-related sibling use self:: instead of Image::.
+
+            //saving all the dimensions
+            $dimensions = Image::$dimensions;
+            rsort($dimensions);
+            foreach ($dimensions as $dimension) {
+                list($key, $value) = explode(':', $dimension);
+                $image_name = uniqueName('.' . Image::IMAGES_STASH, 12) . '.' . $image->ext;
+                $imagefile = $interImage->fit(ceil($image->width / ($image->height / $value)), $value);
+                $imagefile->save('.' . Image::IMAGES_STASH . '/' . $image_name);
+                $field_name = Image::FILENAME_FIELD . '_' . $key . $value;
+                $image->$field_name = $image_name;
+            }
+
+            //saving image itself
+            $image->save();
+
+            //saving image link:
+            $image_link = new $entity;
+            $image_link->pos = sizeof($entity::attachmentTo($item->id)->get()) + 1;
+            $image_link->parent_id = $item->id;
+            $image_link->image_id = $image->id;
+            $image_link->save();
+
+            Session::flash('success-message', Lang::get('global.successfully-saved'));
         }
+
+        //reposition images:
+        self::reposition($request, $item);
     }
 
-    public function reposition($request, $instance, $url)
+    /**
+     * Move the image according to the input data.
+     *
+     * @param $request
+     * @param $item
+     */
+    public static function reposition($request, $item)
     {
-        $status = ['status' => 'error', 'msg' => 'Изображение с таким именем не найдено!'];
-        $state = false;
-        foreach ($request->all() as $name => $val) {
-            if (substr($name, 0, 10) == 'reposition' && $val) {
-                $state = true;
-                $name = substr($name, 11);
-
-                $ic = new ImagesController();
-                $data = $ic->scan($name, function($item) {
-                    $class = get_class($item);
-                    return [$item, $class];
-                });
-
-                $item = $data[0];
-                $class = $data[1];
-//                $itemsAfter = $class::where('pos', '>', $val - 1)->where('name', '!=', $item->name)->get();
-//                foreach ($itemsAfter as $itemAfter) {
-//                    $itemAfter->pos++;
-//                    $itemAfter->save();
-//                }
-                $existing = $class::where('parent_id', $instance->id)->where('pos', $val)->first();
-                $existing->pos = $item->pos;
-                $item->pos = $val;
-                $item->save();
-                $existing->save();
-                $this->reorderItems($class::where('parent_id', $instance->id)->where('pos', '>', 0)->orderBy('pos')->get());
-
-                $status['status'] = 'done';
+        $listToReassign = [];
+        foreach ($request->toArray() as $key => $val) {
+            if (substr($key, 0, strlen(Image::REPOSITION_TAG)) == Image::REPOSITION_TAG) {
+                if ($val) $listToReassign[$key] = $val;
             }
         }
-        if (!$state) $status['status'] = 'next';
-
-        if ($status['status'] == 'done') {
-            return redirect($request->current_url);
+        $entitiesToReorder = [];
+        foreach ($listToReassign as $key => $val) {
+            if (!$val) continue;
+            list( , $entity, $id) = explode(':', $key);
+            $image = $entity::find($id);
+            $imageOriginalPos = $image->pos;
+            $image->pos = $val;
+            $image->save();
+            if ($imageOriginalPos < $val) {
+                $imagesBelow = $entity::where('pos', '<=', $val)->where('parent_id', $item->id)->where('id', '!=', $id)->orderBy('pos')->get();
+                foreach ($imagesBelow as $imageToIncrement) {
+                    $imageToIncrement->pos--;
+                    $imageToIncrement->save();
+                }
+            } else {
+                $imagesAbove = $entity::where('pos', '>=', $val)->where('parent_id', $item->id)->where('id', '!=', $id)->orderBy('pos')->get();
+                foreach ($imagesAbove as $imageToIncrement) {
+                    $imageToIncrement->pos++;
+                    $imageToIncrement->save();
+                }
+            }
+            $entitiesToReorder[] = $entity;
         }
-        elseif ($status['status'] == 'next') {
-            return $this->cleverRedirect($request, $url);
-        }
-        else {
-            return redirect()->back()->withErrors([$status['msg']]);
+        foreach ($entitiesToReorder as $entity) {
+            $itemsToReorder = $entity::where('parent_id', $item->id)->orderBy('pos')->get();
+            reorder_items($itemsToReorder);
         }
     }
 }

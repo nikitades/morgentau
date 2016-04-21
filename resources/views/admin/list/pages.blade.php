@@ -29,24 +29,23 @@
             </div>
         </li>
         @if (!$tree[0])
-                <li class="item header">
-                    <div class="item--icon">
-        <span class="glyphicon glyphicon-exclamation-sign"
-              aria-hidden="true"></span>
-                    </div>
-                    <div class="item--name">
-                        <p>Ошибка! Нет элементов</p>
-                    </div>
-                    <div class="item--view">
+            <li class="item header">
+                <div class="item--icon">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                </div>
+                <div class="item--name">
+                    <p>Ошибка! Нет элементов</p>
+                </div>
+                <div class="item--view">
 
-                    </div>
-                    <div class="item--url">
+                </div>
+                <div class="item--url">
 
-                    </div>
-                    <div class="item--controls">
+                </div>
+                <div class="item--controls">
 
-                    </div>
-                </li>
+                </div>
+            </li>
         @else
             @each('partials.treepage', $tree, 'page')
         @endif
