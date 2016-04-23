@@ -88,7 +88,7 @@ class ImagesController extends Controller
      */
     public function destroy($id)
     {
-        $image = Image::find($id);
+        $image = Image::findOrFail($id);
         $errors = [];
         $not_removed = [];
         foreach (Image::$dimensions as $dimension) {

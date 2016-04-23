@@ -38,6 +38,11 @@ class ViewsController extends Controller
      */
     public function store(Request $request)
     {
+        $val = $this->validate($request, View::$validation);
+        if ($val->fails()) {
+            return redirect()->back()->withErrors($val);
+        }
+        
         $item = new View($request->all());
         $items = View::all();
         $item->pos = sizeof($items) + 1;
@@ -76,6 +81,11 @@ class ViewsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $val = $this->validate($request, View::$validation);
+        if ($val->fails()) {
+            return redirect()->back()->withErrors($val);
+        }
+
         $item = View::findOrFail($id);
         $item->fill($request->all())->save();
         return $this->cleverRedirect($request, '/admin/views');

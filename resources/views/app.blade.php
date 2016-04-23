@@ -10,38 +10,16 @@
     @yield('embed')
 </head>
 <body>
-<div id="document" class="col-lg-10 col-md-12 col-lg-offset-1">
-    <div id="content">
-        @yield('content')
-    </div>
-    <div id="header">
-        <div id="bar" class="clearfix">
-            <div id="header-phones">
-                <span class="icon"></span>
-            </div>
-            <div id="header-addresses">
-                <span class="icon"></span>
-
-            </div>
-        </div>
-        <div id="menu">
+<div id="document" class="container">
+    <div id="header" class="col-xs-12">
+        <div id="menu" class==col-xs-12>
             @include('pages.partials.menu')
         </div>
     </div>
-    <div id="footer" class="top-box">
-        <div class="clearfix">
-            <div class="address">
-
-            </div>
-            <div class="phones">
-            </div>
-        </div>
-        <div id="copyrights">
-
-        </div>
-        <div id="author">
-            <p>Создание сайта: <a href="mailto:pavlovskiy.nikita@gmail.com">morgentau</a></p>
-        </div>
+    <div id="content">
+        @yield('content')
+    </div>
+    <div id="footer">
     </div>
 </div>
 </body>

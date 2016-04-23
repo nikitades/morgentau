@@ -57,16 +57,6 @@ class ViewAttachServiceProvider extends ServiceProvider
             $view->with('menu', \App\Page::menu()->get());
         });
 
-        view()->composer('pages.homePage', function($view) {
-            $news = \App\NewsItem::hot()->get();
-            $service_categories = \App\ServiceCategory::pageList()->get();
-            foreach ($service_categories as $scat) {
-                $images = \App\ServiceCategoryImage::attachmentTo($scat)->get();
-                $scat->images = $images;
-            }
-            $view->with(compact('news', 'service_categories'));
-        });
-
         view()->composer('pages.faq', function($view) {
             $view->with('answers', \App\Faq::answered()->get());
         });
@@ -75,8 +65,8 @@ class ViewAttachServiceProvider extends ServiceProvider
             $view->with('news', \App\NewsItem::pageList()->get());
         });
 
-        view()->composer('pages.services', function($view) {
-            $view->with('services', \App\Service::pageList()->get());
+        view()->composer('admin.edit.views', function($view) {
+            $view->with('files_list', \App\View::ViewFilesList());
         });
     }
 

@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
         {!! Form::label('html_visible', 'Wysiwyg', ['class' => 'control-label col-sm-12']) !!}
-        <div class="col-sm-12 input-holder">
+        <div class="col-sm-11 input-holder">
             {!! Form::checkbox('html', 0, 1, ['class' => 'form-control hidden']) !!}
             {!! Form::checkbox('html', 1, $type == 'create' ? 1 : $item->html, ['id' => 'html_visible']) !!}
         </div>

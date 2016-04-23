@@ -12,6 +12,6 @@
     </div>
     <div class="form-group">
         {!! Form::label('view', 'View', ['class' => 'control-label col-sm-12']) !!}
-        <div class="col-sm-12">{!! Form::text('view', $item->view, ['class' => 'form-control']) !!}</div>
+        <div class="col-sm-12">{!! Form::select('view', $files_list, $item->view, ['class' => 'form-control']) !!}</div>
     </div>
 @stop

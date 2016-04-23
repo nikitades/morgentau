@@ -41,10 +41,8 @@ class NewsController extends Controller
     public function store(CreateNewsItemRequest $request)
     {
         $item = new NewsItem($request->all());
-        $item->save();
-        $ic = new ImagesController();
-        $ic->saveImages($request, $item);
-        return $this->cleverRedirect($request, '/admin/news');
+        ImagesController::saveImages($request, $item);
+        return clever_redirect($request, '/admin/pages');
     }
 
     /**
@@ -81,9 +79,8 @@ class NewsController extends Controller
     {
         $item = NewsItem::findOrFail($id);
         $item->fill($request->all())->save();
-        $ic = new ImagesController();
-        $ic->saveImages($request, $item);
-        return $ic->reposition($request, $item, '/admin/news');
+        ImagesController::saveImages($request, $item);
+        return clever_redirect($request, '/admin/pages');
     }
 
     /**

@@ -7,31 +7,31 @@
 
 @section('fields')
     <div class="form-group">
-        {!! Form::label('name', 'Название', ['class' => 'control-label col-sm-1']) !!}
-        <div class="col-sm-11">
+        {!! Form::label('name', 'Название', ['class' => 'control-label col-sm-12']) !!}
+        <div class="col-sm-12">
             {!! Form::text('name', $item->name, ['class' => 'form-control']) !!}
         </div>
     </div>
     <div class="form-group">
-        {!! Form::label('code', 'Код', ['class' => 'control-label col-sm-1']) !!}
-        <div class="col-sm-11">
+        {!! Form::label('code', 'Код', ['class' => 'control-label col-sm-12']) !!}
+        <div class="col-sm-12">
             {!! Form::text('code', $item->code, ['class' => 'form-control']) !!}
         </div>
     </div>
     <div class="form-group">
-        {!! Form::label('type', 'Тип', ['class' => 'control-label col-sm-1']) !!}
-        <div class="col-sm-11">{!! Form::select('type', $item->types(), $item->type, ['class' => 'form-control']) !!}</div>
+        {!! Form::label('type', 'Тип', ['class' => 'control-label col-sm-12']) !!}
+        <div class="col-sm-12">{!! Form::select('type', $item->types(), $item->type, ['class' => 'form-control']) !!}</div>
     </div>
     @if ($type == 'edit')
         @if ($item->type == 'string')
             <div class="form-group">
-                {!! Form::label('value', 'Значение', ['class' => 'control-label col-sm-1']) !!}
-                <div class="col-sm-11">{!! Form::text('value', $item->value, ['class' => 'form-control']) !!}</div>
+                {!! Form::label('value', 'Значение', ['class' => 'control-label col-sm-12']) !!}
+                <div class="col-sm-12">{!! Form::text('value', $item->value, ['class' => 'form-control']) !!}</div>
             </div>
         @endif
         @if ($item->type == 'boolean')
             <div class="form-group">
-                {!! Form::label('value_visible', 'Значение', ['class' => 'control-label col-sm-1']) !!}
+                {!! Form::label('value_visible', 'Значение', ['class' => 'control-label col-sm-12']) !!}
                 <div class="col-sm-11 input-holder">
                     {!! Form::checkbox('value', 0, 1, ['class' => 'form-control hidden']) !!}
                     {!! Form::checkbox('value', 1, $item->value, ['id' => 'value_visible']) !!}
@@ -40,8 +40,8 @@
         @endif
         @if ($item->type == 'text')
             <div class="form-group">
-                {!! Form::label('value', 'Текст', ['class' => 'control-label col-sm-1']) !!}
-                <div class="col-sm-11">{!! Form::textarea('value', $item->value, ['class' => 'form-control']) !!}</div>
+                {!! Form::label('value', 'Текст', ['class' => 'control-label col-sm-12']) !!}
+                <div class="col-sm-12">{!! Form::textarea('value', $item->value, ['class' => 'form-control']) !!}</div>
             </div>
             <script>
                 $(document).ready(function () {
