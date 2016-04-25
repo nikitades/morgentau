@@ -38,15 +38,9 @@ elixir(function(mix) {
      */
 
     mix.sass('app.scss', 'resources/assets/css/app.css');
-    mix.sass('homePage.scss', 'public/css/homePage.css');
     mix.sass('regularPage.scss', 'public/css/regularPage.css');
-    mix.sass('faq.scss', 'public/css/faq.css');
-    mix.sass('contacts.scss', 'public/css/contacts.css');
-    mix.sass('newsItem.scss', 'public/css/newsItem.css');
-    mix.sass('newsList.scss', 'public/css/newsList.css');
     mix.sass('login.scss', 'public/css/login.css');
     mix.sass('admin-pages-list.scss', 'public/css/admin-pages-list.css');
-    mix.sass('services.scss', 'public/css/services.css');
 
     mix.styles([
         'libs/bootstrap.min.css',
@@ -72,15 +66,9 @@ elixir(function(mix) {
         'public/css/admin.css',
         'public/js/admin.js',
         'public/css/app.css',
-        'public/css/homePage.css',
         'public/css/regularPage.css',
-        'public/css/faq.css',
-        'public/css/contacts.css',
-        'public/css/newsItem.css',
-        'public/css/newsList.css',
         'public/css/login.css',
         'public/css/admin-pages-list.css',
-        'public/css/services.css',
         'public/js/app.js'
     ]);
 

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\NewsItem;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Session;
 
 class NewsController extends Controller
 {
@@ -41,8 +43,10 @@ class NewsController extends Controller
     public function store(CreateNewsItemRequest $request)
     {
         $item = new NewsItem($request->all());
+        $item->save();
         ImagesController::saveImages($request, $item);
-        return clever_redirect($request, '/admin/pages');
+        Session::flash('success-message', Lang::get('global.successfully-saved'));
+        return clever_redirect($request, '/admin/news');
     }
 
     /**
@@ -80,7 +84,8 @@ class NewsController extends Controller
         $item = NewsItem::findOrFail($id);
         $item->fill($request->all())->save();
         ImagesController::saveImages($request, $item);
-        return clever_redirect($request, '/admin/pages');
+        Session::flash('success-message', Lang::get('global.successfully-saved'));
+        return clever_redirect($request, '/admin/news');
     }
 
     /**

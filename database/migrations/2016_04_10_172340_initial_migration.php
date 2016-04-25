@@ -27,7 +27,8 @@ class InitialMigration extends Migration
             $table->string('meta_tags');
             $table->string('meta_description');
             $table->string('url');
-            $table->integer('parent');
+            $table->string('full_url');
+            $table->integer('parent_id');
             $table->integer('real_level');
             $table->longText('page_content');
             $table->boolean('is_in_menu');
@@ -94,19 +95,6 @@ class InitialMigration extends Migration
             $table->integer('file_id')->unsigned();
             $table->foreign('file_id')->references('id')->on('files')->onDelete('cascade');
             $table->timestamps();
-        });
-
-        Schema::create('page_trees', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('pos');
-            $table->integer('ancestor')->unsigned();
-            $table->integer('descendant');
-            $table->integer('depth');
-            $table->timestamps();
-            $table->foreign('ancestor')
-                ->references('id')
-                ->on('pages')
-                ->onDelete('cascade');
         });
 
         Schema::create('actions', function (Blueprint $table) {
@@ -201,7 +189,6 @@ class InitialMigration extends Migration
         Schema::drop('page_images');
         Schema::drop('page_slider_images');
         Schema::drop('page_files');
-        Schema::drop('page_trees');
         Schema::drop('actions');
         Schema::drop('views');
         Schema::drop('texts');

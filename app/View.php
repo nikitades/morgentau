@@ -29,7 +29,7 @@ class View extends Model
         foreach ($files_list as $file) {
             if (substr($file, -10) == '.blade.php') {
                 $basename = substr($file, 0, -10);
-                $output['pages'.$basename] = $basename;
+                $output['pages.'.$basename] = $basename;
             }
         }
         return $output;

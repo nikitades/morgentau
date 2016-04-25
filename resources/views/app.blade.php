@@ -6,16 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+    <title>{{ $page->name }}</title>
     <script src="{{ elixir('js/app.js') }}"></script>
     @yield('embed')
 </head>
 <body>
-<div id="document" class="container">
-    <div id="header" class="col-xs-12">
-        <div id="menu" class==col-xs-12>
-            @include('pages.partials.menu')
-        </div>
+<div id="header" class="container">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">{{ $_ENV['PROJECT_NAME'] }}</a>
     </div>
+    <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            @include('pages.partials.menu')
+        </ul>
+    </div><!--/.nav-collapse -->
+</div>
+<div id="document" class="container">
     <div id="content">
         @yield('content')
     </div>

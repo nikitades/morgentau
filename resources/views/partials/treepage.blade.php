@@ -14,7 +14,7 @@
         @endif
     </div>
     <div class="item--url">
-        <a href="{{ $page->url }}">{{ $page->url }}</a>
+        <a href="{{ $page->full_url }}">{{ $page->full_url }}</a>
     </div>
     <div class="item--controls">
         @if ($page->real_level != 0)

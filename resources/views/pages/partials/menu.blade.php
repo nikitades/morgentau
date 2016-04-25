@@ -1,7 +1,3 @@
-<ul class="clearfix">
-    @foreach ($menu as $page)
-        <li class="shadowed {{ $page->url == $_SERVER['REQUEST_URI'] ? 'sel' : '' }}" style="width: {{ 100 / sizeof($menu) }}%;">
-            <a href="{{ $page->url != $_SERVER['REQUEST_URI'] ? $page->url : 'javascript: void(0)' }}">{{ $page->name }}</a>
-        </li>
-    @endforeach
-</ul>
+@foreach ($menu as $page)
+        <li><a href="{{ $page->full_url != $_SERVER['REQUEST_URI'] ? $page->full_url : 'javascript: void(0)' }}">{{ $page->name }}</a></li>
+@endforeach

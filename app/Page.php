@@ -17,7 +17,7 @@ class Page extends Model
         'meta_tags',
         'meta_description',
         'url',
-        'parent',
+        'parent_id',
         'view',
         'real_level',
         'is_root',
@@ -32,7 +32,7 @@ class Page extends Model
 
     public function scopeMenu($query)
     {
-        return $query->where('is_active', 1)->where('is_in_menu', 1)->orderBy('pos');
+        return $query->where('is_active', 1)->where('is_in_menu', 1)->where('real_level', '>', 0)->orderBy('pos');
     }
 
     public static function images()
@@ -55,6 +55,57 @@ class Page extends Model
         return $this->hasMany('App\PageImage');
     }
 
+    public function createUrl()
+    {
+        $parentsStack = [];
+        $this->findParents($parentsStack);
+        $url = '';
+        $prefix = '';
+        foreach (array_reverse($parentsStack) as $item) {
+            $url .= $prefix . $item->url;
+            $prefix = $item->url == '/' ? '' : '/';
+        }
+        return $url;
+    }
+
+    public function getAncestry()
+    {
+        $parentsStack = [];
+        $this->findParents($parentsStack);
+        reset($parentsStack)->last = true;
+        return array_reverse($parentsStack);
+    }
+
+    public function getPosterity()
+    {
+        $descendantsStack = [];
+        $this->findDescendantsFlat($descendantsStack);
+        return $descendantsStack;
+    }
+
+    public function findParents(&$array)
+    {
+        $parent = Page::find($this->parent_id);
+        $array[$this->name] = $this;
+        if ($parent && $parent->real_level >= 0) {
+            $parent->findParents($array);
+        }
+    }
+
+    public function findDescendantsFlat(&$array)
+    {
+        $descendants = Page::where('parent_id', $this->id)->get();
+        if (sizeof($descendants)) {
+            foreach ($descendants as $descendant) {
+                $descendantDescendants = Page::where('parent_id', $descendant->id)->get();
+                if (sizeof($descendantDescendants)) {
+                    $descendant->findDescendantsFlat($array);
+                }
+                $array[] = $descendant;
+            }
+        }
+    }
+
 
     /**
      * The service function to build the tree-like list of the pages.
@@ -65,7 +116,7 @@ class Page extends Model
     public static function buildTree($root)
     {
         if (!$root) return false;
-        $children = Page::where('parent', $root->id)->orderBy('pos')->get();
+        $children = Page::where('parent_id', $root->id)->orderBy('pos')->get();
         if (sizeof($children)) {
             foreach ($children as $child) {
                 Page::buildTree($child);
@@ -86,7 +137,7 @@ class Page extends Model
     public static function flatten($page, $output)
     {
         if (!$page) return [Page::firstOrCreate(['is_root' => 1, 'real_level' => -1, 'name' => Page::ROOT_PAGE_NAME, 'url' => ''])];
-        $page->name = str_repeat('&nbsp;&nbsp;', $page->real_level > 0 ? $page->real_level : 0) . ($page->real_level > 0 ? '└' : '') . str_repeat('─', $page->real_level > 0 ? $page->real_level : 0) . ' ' . $page->name;
+        $page->name = str_repeat('&nbsp;&nbsp;', $page->real_level > 0 ? $page->real_level : 0) . ($page->real_level > 0 ? '┖' : '') . str_repeat('-', $page->real_level > 0 ? $page->real_level : 0) . ' ' . $page->name;
         $output[] = $page;
         if (sizeof($page->children)) {
             foreach ($page->children as $child) {

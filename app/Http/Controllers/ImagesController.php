@@ -81,12 +81,23 @@ class ImagesController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Removes the specified resource from storage.
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    {
+        return self::deleteImage($id);
+    }
+
+    /**
+     * Deletes the entity in the images table and all the linked files.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public static function deleteImage($id)
     {
         $image = Image::findOrFail($id);
         $errors = [];
@@ -125,7 +136,7 @@ class ImagesController extends Controller
     }
 
     /**
-     * Check if all the required folders exist. Creates if not.
+     * Checks if all the required folders exist. Creates if not.
      */
     public static function checkRequiredImagesFolders()
     {

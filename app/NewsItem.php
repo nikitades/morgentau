@@ -18,6 +18,12 @@ class NewsItem extends Model
         'hot',
     ];
 
+    public static $validation = [
+        'name' => 'required',
+        'date' => 'required',
+        'newsitem_url' => 'required',
+    ];
+
     public static function images()
     {
         return [

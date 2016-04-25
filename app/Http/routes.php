@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'PagesController@show');
+Route::get('/', 'PagesController@home');
 
 /*
  * Auth routes
@@ -135,13 +135,13 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
 });
 
 /*
- * Pages:
- */
-
-Route::get('{url}', 'PagesController@show');
-
-/*
  * News:
  */
 
 Route::get('news/{url}', 'NewsController@show');
+
+/*
+ * Pages:
+ */
+
+Route::get('{whole_url}', 'PagesController@show');

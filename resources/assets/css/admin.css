@@ -118,6 +118,9 @@ table.list th:last-child {
   padding: 0; }
 
 /* Editing page: */
+.ancestors-select {
+  font: 12px 'Courier New'; }
+
 /* Attached image: */
 .attached-images-list {
   text-align: left; }

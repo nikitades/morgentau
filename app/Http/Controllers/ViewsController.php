@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\View;
+use Illuminate\Support\Facades\Validator;
 
 class ViewsController extends Controller
 {
@@ -38,7 +39,7 @@ class ViewsController extends Controller
      */
     public function store(Request $request)
     {
-        $val = $this->validate($request, View::$validation);
+        $val = Validator::make($request->all(), View::$validation);
         if ($val->fails()) {
             return redirect()->back()->withErrors($val);
         }
@@ -81,7 +82,7 @@ class ViewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $val = $this->validate($request, View::$validation);
+        $val = Validator::make($request->all(), View::$validation);
         if ($val->fails()) {
             return redirect()->back()->withErrors($val);
         }

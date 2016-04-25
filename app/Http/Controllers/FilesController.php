@@ -89,6 +89,17 @@ class FilesController extends Controller
      */
     public function destroy($id)
     {
+        self::deleteFile($id);
+    }
+
+    /**
+     * Deletes the file entity and the linked file.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public static function deleteFile($id)
+    {
         $file = Basefile::findOrFail($id);
         $filepath = '.'.Basefile::FILE_STASH.'/'.$file->filename;
         if (file_exists($filepath)) {
@@ -100,6 +111,10 @@ class FilesController extends Controller
         return redirect()->back()->with('success-message', Lang::get('global.successfully-removed'));
     }
 
+
+    /**
+     * Checks the needed folders for existence. Creates if needed.
+     */
     public static function checkRequiredFilesFolders()
     {
         foreach (Basefile::$required_files_folders as $folder) {
