@@ -1,0 +1,280 @@
+/* Home page: */
+#slider.homePage-slider {
+  background-size: 120% 120%; }
+
+#content {
+  padding-top: 80px; }
+
+#pageData {
+  top: 0;
+  left: 0;
+  width: 100%; }
+
+/* News & schedule */
+#schedule-news {
+  background: url("/images/clock.jpg") no-repeat left center/50% auto; }
+
+@media (max-width: 1550px) {
+  #schedule-news {
+    background: url("/images/clock.jpg") no-repeat left center/auto 100%; } }
+
+#schedule {
+  min-height: 300px;
+  padding: 30px 40px;
+  position: relative;
+  width: 40%;
+  float: left; }
+
+#schedule .title {
+  color: white;
+  text-transform: uppercase;
+  margin: 0; }
+
+#schedule > * {
+  color: white;
+  text-transform: uppercase;
+  margin: 0;
+  z-index: 5; }
+
+#schedule:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; }
+
+#schedule .content {
+  font: 1em 'Fira Sans Book';
+  margin-top: 35px; }
+
+#news {
+  float: left;
+  min-height: 300px;
+  height: 100%;
+  padding: 30px 40px;
+  width: 60%;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#dbdbdb+0,a3a4a4+100 */
+  background: #dbdbdb;
+  /* Old browsers */
+  /* FF3.6-15 */
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #dbdbdb 0%, #a3a4a4 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', endColorstr='#a3a4a4',GradientType=1 );
+  /* IE6-9 */ }
+
+#news .title {
+  color: #3f3f3f;
+  text-transform: uppercase;
+  margin: 0 0 0 75px; }
+
+#news .title p {
+  margin: 0; }
+
+#news .content {
+  margin: 0 0 0 100px; }
+
+/* Services */
+#services {
+  height: 350px;
+  background: #FFFFFF;
+  text-align: center; }
+
+.services--service {
+  position: relative;
+  width: 256px;
+  height: 275px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 45px 0px; }
+
+.services--service--gray {
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.3s; }
+
+.services--service--regular {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.3s; }
+
+.services--service span {
+  position: absolute;
+  display: block;
+  width: 100%;
+  text-align: center;
+  bottom: 10%;
+  left: 0;
+  opacity: 0;
+  transition: 0.3s; }
+
+.services--service:hover .services--service--regular {
+  opacity: 1;
+  margin-top: -15%; }
+
+.services--service:hover .services--service--gray {
+  opacity: 0;
+  margin-top: -15%; }
+
+.services--service:hover span {
+  opacity: 1; }
+
+@media (min-width: 1919px) {
+  .services--service span {
+    font-size: 1.33em;
+    bottom: -5px; } }
+
+@media (max-width: 1919px) {
+  #services {
+    height: 300px;
+    background: #FFFFFF;
+    text-align: center; }
+  .services--service {
+    position: relative;
+    width: 212px;
+    height: 275px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px; }
+  .services--service--gray {
+    width: 212px;
+    opacity: 1; }
+  .services--service--regular {
+    width: 212px;
+    opacity: 0; }
+  .services--service:hover .services--service--regular {
+    opacity: 1;
+    margin-top: -8%; }
+  .services--service:hover .services--service--gray {
+    opacity: 0;
+    margin-top: -8%; } }
+
+@media (max-width: 1870px) {
+  #services {
+    height: 300px;
+    background: #FFFFFF;
+    text-align: center; }
+  .services--service {
+    position: relative;
+    width: 164px;
+    height: 230px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 35px 20px 0; }
+  .services--service--gray {
+    width: 164px;
+    opacity: 1; }
+  .services--service--regular {
+    width: 164px;
+    opacity: 0; } }
+
+@media (max-width: 1550px) {
+  #services {
+    height: 300px;
+    background: #FFFFFF;
+    text-align: center; }
+  .services--service {
+    position: relative;
+    width: 128px;
+    height: 180px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 75px 10px 0; }
+  .services--service--gray {
+    width: 128px;
+    opacity: 1; }
+  .services--service--regular {
+    width: 128px;
+    opacity: 0; } }
+
+/* Article! */
+#article {
+  margin-top: 1220px;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5e5e5e+0,3f3f3f+48,5e5e5e+100 */
+  background: #5e5e5e;
+  /* Old browsers */
+  /* FF3.6-15 */
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #5e5e5e 0%, #3f3f3f 48%, #5e5e5e 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5e5e5e', endColorstr='#5e5e5e',GradientType=1 );
+  /* IE6-9 */
+  padding: 50px 40px 50px;
+  color: white; }
+
+#article h1 {
+  margin: 0 0 25px 0;
+  text-align: center; }
+
+#article .body {
+  font-size: 1em;
+  font-family: 'Fira Sans UltraLight';
+  text-align: center; }
+
+#article ul {
+  display: inline-block;
+  text-align: left; }
+
+.news-holder {
+  margin: 0;
+  padding: 0; }
+
+.news-holder--news-item {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0; }
+
+.news-holder--news-item--calendar-icon {
+  float: left;
+  width: 38px;
+  height: 44px;
+  background: #fefef8;
+  border: 1px solid #b1afab;
+  position: relative;
+  margin-top: 5px; }
+
+.news-holder--news-item--calendar-icon:before {
+  content: '| | |';
+  font: 0.35em 'Fira Sans Book';
+  display: block;
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 20px;
+  margin-left: -10px;
+  text-align: center;
+  color: #a3a3a3; }
+
+.news-holder--news-item--calendar-icon--month-name {
+  width: 32px;
+  margin: 0 auto;
+  border-bottom: 1px solid #a3a3a3;
+  font: 0.65em 'Fira Sans Book';
+  text-transform: uppercase;
+  text-align: center; }
+
+.news-holder--news-item--calendar-icon--month-name span {
+  display: block;
+  margin-top: 3px;
+  margin-bottom: -2px; }
+
+.news-holder--news-item--calendar-icon--date {
+  text-align: center;
+  color: #3f3f3f;
+  font: bold 1em 'Fira Sans Boold';
+  margin-top: -1px; }
+
+.news-holder--news-item--news-item-content {
+  font: 0.85em 'Fira Sans Book';
+  border-bottom: 1px solid #a3a3a3;
+  margin: 10px 0 0 75px;
+  padding-bottom: 10px; }
+
+/*# sourceMappingURL=homePage.css.map */

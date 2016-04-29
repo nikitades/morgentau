@@ -1,0 +1,154 @@
+/* FAQ! */
+/* Regular page: */
+h1, h2, h3 {
+  font-family: 'Fira Sans Boold';
+  color: #222222; }
+
+#pageData {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100%; }
+
+/* Slider: */
+#slider {
+  height: 300px;
+  width: 100%;
+  background: url("/images/slide-image.jpg") no-repeat center center/cover; }
+
+#credentials {
+  width: 100%;
+  text-align: center;
+  padding-top: 100px; }
+
+/* Article! */
+#article {
+  margin-top: 220px;
+  background: white;
+  padding: 30px 40px 50px;
+  color: dimgrey; }
+
+#article .holder {
+  max-width: 1024px;
+  margin: 0 auto; }
+
+#article h1 {
+  margin: 0 0 25px 0;
+  text-align: left; }
+
+#article .body {
+  font-size: 0.8em;
+  font-family: 'Fira Sans UltraLight';
+  text-align: left; }
+
+#article ul {
+  display: inline-block;
+  text-align: left; }
+
+/* Footer! */
+#footer {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5e5e5e+0,5e5e5e+0,3f3f3f+47,5e5e5e+100 */
+  background: #5e5e5e;
+  /* Old browsers */
+  /* FF3.6-15 */
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #5e5e5e 0%, #5e5e5e 0%, #3f3f3f 47%, #5e5e5e 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5e5e5e', endColorstr='#5e5e5e',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */
+  color: white; }
+
+#footer a {
+  transition: 0.3s; }
+
+#footer .phones a {
+  color: silver; }
+
+#footer .phones a:hover {
+  color: whitesmoke; }
+
+#footer .address {
+  border-right: 1px solid white; }
+
+#footer #author a {
+  color: silver;
+  border-bottom: 1px dotted whitesmoke; }
+
+#footer #author:hover a {
+  color: whitesmoke; }
+
+#article .holder {
+  max-width: 1280px; }
+
+.faq-form {
+  background: #dcdcdc;
+  margin: 50px 0;
+  position: relative;
+  padding: 40px; }
+
+.faq-form > .holder {
+  width: 100%; }
+
+.faq-form [name='name'] {
+  display: block;
+  width: 300px;
+  padding: 15px;
+  box-sizing: content-box;
+  border: 1px solid #575757;
+  background: white;
+  margin: 10px 0; }
+
+.faq-form [name='email'] {
+  display: block;
+  width: 300px;
+  padding: 15px;
+  box-sizing: content-box;
+  border: 1px solid #575757;
+  background: white;
+  margin: 10px 0; }
+
+.faq-form [name='message'] {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #575757;
+  background: white; }
+
+.faq-form [type='submit'] {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5e5e5e+0,5e5e5e+0,3f3f3f+47,5e5e5e+100 */
+  background: #5e5e5e;
+  /* Old browsers */
+  /* FF3.6-15 */
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #5e5e5e 0%, #5e5e5e 0%, #3f3f3f 47%, #5e5e5e 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5e5e5e', endColorstr='#5e5e5e',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 10px 30px;
+  color: white;
+  cursor: pointer;
+  margin: 20px 0 0; }
+
+.faq-answers--answer {
+  padding: 50px 0;
+  border-bottom: 1px solid #979797;
+  list-style: none; }
+
+.faq-answers--question {
+  font: 1.33em 'Fira Sans Boold';
+  color: #222222;
+  white-space: pre-line; }
+
+.faq-answers--answer-text {
+  white-space: pre-line;
+  color: #222222;
+  font: 1.33em 'Fira Sans LightItalic'; }
+
+.faq-answers--sub {
+  white-space: pre-line;
+  color: #222222;
+  font: 1em 'Fira Sans BookItalic'; }
+
+/*# sourceMappingURL=faq.css.map */
