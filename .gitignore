@@ -5,7 +5,8 @@
 /public/files/*
 /public/build/*
 /public/css/*
-/public/js/*
+/public/js/*.js
+/public/js/*.map
 /public/fonts/*
 Homestead.yaml
 Homestead.json
