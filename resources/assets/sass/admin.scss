@@ -79,6 +79,25 @@
   margin: 30px 0;
 }
 
+/* Inputs style: */
+
+/* Date pickers: */
+
+input[type="date"] {
+  position: relative;
+  padding-left: 40px;
+}
+
+::-webkit-inner-spin-button { display: none; }
+::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: block;
+  opacity: 1;
+  float: left;
+}
+
 /* Styles */
 
 #content {

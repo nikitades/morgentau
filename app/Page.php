@@ -32,7 +32,7 @@ class Page extends Model
 
     public function scopeMenu($query)
     {
-        return $query->where('is_active', 1)->where('is_in_menu', 1)->where('real_level', '>', 0)->orderBy('pos');
+        return $query->where('is_active', 1)->where('is_in_menu', 1)->where('real_level', '=', 1)->orderBy('pos');
     }
 
     public static function images()

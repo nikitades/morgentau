@@ -23,6 +23,9 @@ elixir(function(mix) {
         'libs/bootstrap.min.css',
         'libs/bootstrap-theme.min.css',
         'libs/select2.min.css',
+        'libs/jquery-ui.structure.min.css',
+        'libs/jquery-ui.min.css',
+        'libs/jquery-ui.theme.min.css',
         'admin.css'
     ], 'public/css/admin.css', 'resources/assets/css');
 
@@ -30,6 +33,7 @@ elixir(function(mix) {
         'libs/jquery.min.js',
         'libs/bootstrap.min.js',
         'libs/select2.full.min.js',
+        'libs/jquery-ui.min.js',
         'admin.js'
     ], 'public/js/admin.js', 'resources/assets/js');
 

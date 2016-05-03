@@ -12,26 +12,30 @@
 </head>
 <body>
 <div id="header" class="container">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">{{ $_ENV['PROJECT_NAME'] }}</a>
+    <div class="row">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">{{ $_ENV['PROJECT_NAME'] }}</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                @include('pages.partials.menu')
+            </ul>
+        </div><!--/.nav-collapse -->
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-            @include('pages.partials.menu')
-        </ul>
-    </div><!--/.nav-collapse -->
 </div>
 <div id="document" class="container">
-    <div id="content">
-        @yield('content')
-    </div>
-    <div id="footer">
+    <div class="row">
+        <div id="content" class="col-xs-12">
+            @yield('content')
+        </div>
+        <div id="footer">
+        </div>
     </div>
 </div>
 </body>

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=10, maximum-scale=1">
     <title>Администрирование</title>
     <link rel="stylesheet" href="{{ elixir('css/admin.css') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
     <script src="{{ elixir('js/admin.js') }}"></script>
     <script src="/js/ckeditor/ckeditor.js"></script>
     @yield('embed')

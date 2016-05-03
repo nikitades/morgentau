@@ -10,7 +10,7 @@
     <div class="form-group col-xs-12">
         @if ($item->full_url != '')
             <pre style="display: inline-block;"><a
-                        href="{{ ($item->real_level == 0 ? '/' : '' ).$item->full_url }}">{{ $item->full_url }}</a>
+                        href="{{ $item->full_url }}">{{ $item->full_url }}</a>
 </pre>
         @endif
     </div>
