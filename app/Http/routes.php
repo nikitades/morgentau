@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'ArtsController@index');
+Route::get('/', 'PagesController@home');
 /*
  * Auth routes
  */
@@ -70,15 +70,6 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::post('news', 'NewsController@store');
     Route::get('news/{id}/delete', 'NewsController@destroy');
     Route::get('news/{id}/hot', 'NewsController@makeHot');
-
-    /*
-     * News:
-     */
-
-    Route::put('arts/{id}', 'ArtsController@update');
-    Route::post('arts', 'ArtsController@store');
-    Route::get('arts/{id}/delete', 'ArtsController@destroy');
-    Route::get('arts/{id}/hot', 'ArtsController@makeHot');
 
     /*
      * Texts:

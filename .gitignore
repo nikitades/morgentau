@@ -1,13 +1,12 @@
 /vendor
 /node_modules
 /backups
-/public/images/*
-/public/files/*
-/public/build/*
-/public/css/*
+/public/images/
+/public/files/
+/public/build/
+/public/css/
 /public/js/*.js
 /public/js/*.map
-/public/fonts/*
 Homestead.yaml
 Homestead.json
 .env

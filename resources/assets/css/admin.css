@@ -68,7 +68,7 @@
 /* Date pickers: */
 input[type="date"] {
   position: relative;
-  padding-left: 35px; }
+  padding-left: 40px; }
 
 ::-webkit-inner-spin-button {
   display: none; }
