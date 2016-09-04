@@ -44,4 +44,9 @@ class Image extends Model
     {
         return '/images/delete/' . $this->id;
     }
+
+    public function source() //TODO: коммитнуть эту тему
+    {
+        return $this->hasOne('App\Image', 'id', 'image_id');
+    }
 }

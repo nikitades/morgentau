@@ -52,7 +52,7 @@ class Page extends Model
 
     public function pageImages()
     {
-        return $this->hasMany('App\PageImage');
+        return $this->hasMany('App\PageImage', 'parent_id', 'id');
     }
 
     public function createUrl()
