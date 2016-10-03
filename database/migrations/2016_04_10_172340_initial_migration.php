@@ -17,10 +17,6 @@ class InitialMigration extends Migration
             $table->integer('admin');
         });
 
-        DB::statement('INSERT INTO users 
-            (`name`, `email`, `password`, `admin`)
-            VALUES ("Adminelle", "admin@morgent.au", "$2y$10$29qtVWCcBgnpNNGLQhjQveC.MupNZaabjL.iGZAWKhd/MWztreIN.", "1")');
-
         Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('pos');

@@ -1,7 +1,13 @@
 /node_modules
+/backups
 /public/storage
-/vendor
-/.idea
-Homestead.json
+/public/images/
+/public/files/
+/public/build/
+/public/css/
+/public/js/*.js
+/public/js/*.map
 Homestead.yaml
+Homestead.json
 .env
+.idea

@@ -12,12 +12,6 @@
 */
 
 Route::get('/', 'PagesController@home');
-
-Route::get('/test', function () {
-   \DB::statement('insert into `news` (`title`) values (12312)');
-    return 'ok';
-});
-
 /*
  * Auth routes
  */
@@ -158,4 +152,4 @@ Route::get('news/{url}', 'NewsController@show');
  * Pages:
  */
 
-Route::get('{whole_url}', 'PagesController@show');
+Route::get('{whole_url}', 'PagesController@show')->where('whole_url', '(.*)');
