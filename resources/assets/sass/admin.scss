@@ -1,0 +1,255 @@
+
+/* Our own snippets */
+
+.no-padding {
+  padding: 0;
+}
+
+.no-side-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0;
+}
+
+.red {
+  color: red;
+}
+
+.red:hover {
+  color: #c80000;
+}
+
+.buffer-25 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.buffer-50 {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.input-holder {
+  box-sizing: border-box;
+  padding-top: 6px;
+  margin-left: 0;
+}
+
+.form-horizontal .editing-fields .control-label {
+  text-align: left;
+  padding-top: 0;
+  margin-bottom: 5px;
+}
+
+.form-horizontal .editing-fields input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+}
+
+.control-label, input[type='checkbox'], input[type='radio'] {
+  cursor: pointer;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.alert-nice {
+  padding-left: 30px;
+  margin: 30px 0;
+}
+
+/* Inputs style: */
+
+/* Date pickers: */
+
+input[type="date"] {
+  position: relative;
+  padding-left: 40px;
+}
+
+::-webkit-inner-spin-button { display: none; }
+::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: block;
+  opacity: 1;
+  float: left;
+}
+
+/* Styles */
+
+#content {
+  padding-top: 50px;
+  height: 100vh;
+}
+
+td.controls form {
+  width: 24px;
+  display: inline-block;
+}
+
+.page_not_active {
+  opacity: 0.5;
+}
+
+/* Sidebar */
+
+.sidebar {
+  height: 100%;
+}
+
+.sidebar .nav li {
+  position: relative;
+}
+
+.sidebar .nav li:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 15%;
+  height: 70%;
+  width: 2px;
+  background: rgba(0,0,0,0.01);
+}
+
+.sidebar .nav li.delimiter {
+  height: 10px;
+}
+
+.sidebar .nav li.delimiter:hover {
+  background: white;
+}
+
+.sidebar .nav li.active:after {
+  background: #189DE1;
+}
+
+.sidebar .active {
+  background: rgba(222,222,222,0.9);
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+/* List */
+
+table.list th:last-child {
+  text-align: right;
+}
+
+/* Texts: */
+
+.text_content pre {
+  margin: 0;
+  padding: 0;
+}
+
+/* Editing page: */
+
+.ancestors-select {
+  font: 12px 'Courier New';
+}
+
+/* Attached image: */
+
+.attached-images-list {
+  text-align: left;
+}
+
+.attached-images-list .attached-image {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  margin: 0 5px 30px;
+  position: relative;
+  padding: 15px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 4px;
+  height: 180px;
+}
+
+.attached-image--control {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+}
+
+.attached-image--delete {
+  display: inline-block;
+}
+
+.attached-image--delete .glyphicon {
+  top: 2px;
+  font-size: 1.1em;
+}
+
+/* Attached file: */
+
+.attached-file {
+  margin: 0 0 10px 0;
+}
+
+.attached-file:before {
+  content: '';
+  display: inline-block;
+  vertical-align: top;
+  height: 20px;
+  width: 17px;
+  background: url('/images/icons/document325.svg') no-repeat center center / contain;
+}
+
+.attached-file.zip:before {
+  background: url('/images/icons/zip6.svg') no-repeat center center / contain;
+}
+
+.attached-file > * {
+  display: inline-block;
+}
+
+.attached-file--delete {
+  display: inline-block;
+}
+
+.attached-file--delete .glyphicon {
+  top: 2px;
+  font-size: 1.1em;
+}
+
+/* Preloader: */
+
+.preloader {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/images/preloader.gif') no-repeat center center, rgba(255,255,255,0.9);
+  z-index: 2000;
+}

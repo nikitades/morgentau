@@ -1,0 +1,20 @@
+/* Useful snippets: */
+
+.buffer-25 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.buffer-50 {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
