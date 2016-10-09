@@ -29,6 +29,14 @@ Route::post('register', 'Auth\RegisterController@register');
 Route::group(['middleware' => ['auth', 'admin']], function() {
 
     /*
+     * Version route:
+     */
+
+    Route::get('/version', function () {
+        return view('admin.version');
+    });
+
+    /*
      * General admin routes:
      */
 
