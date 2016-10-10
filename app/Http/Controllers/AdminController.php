@@ -5,6 +5,11 @@ use App\Http\Requests;
 
 class AdminController extends Controller
 {
+
+    public static $async = [
+        'move' => []
+    ];
+
     /**
      * Display a listing of the resource.
      *

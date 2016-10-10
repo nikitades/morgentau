@@ -11,7 +11,14 @@
 |
 */
 
+/*
+ |-------------------------------------------------------------------------
+ | Public routes:
+ |-------------------------------------------------------------------------
+ */
+
 Route::get('/', 'PagesController@home');
+
 /*
  * Auth routes
  */
@@ -23,10 +30,32 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm');
 Route::post('register', 'Auth\RegisterController@register');
 
 /*
- * Admin routes
+ * News:
  */
 
-Route::group(['middleware' => ['auth', 'admin']], function() {
+Route::get('news/{url}', 'NewsController@show');
+
+/*
+ |-------------------------------------------------------------------------
+ | Ajax routes:
+ |-------------------------------------------------------------------------
+ */
+
+Route::group(['middleware' => ['ajax', 'admin'], 'prefix' => 'ajax/admin'], function () {
+    Route::match(['get', 'post'], '{controller}/{method}', 'AjaxController@run');
+});
+
+Route::group(['middleware' => ['ajax'], 'prefix' => 'ajax'], function () {
+    Route::match(['get', 'post'], '{controller}/{method}', 'AjaxController@run');
+});
+
+/*
+ |-------------------------------------------------------------------------
+ | Admin routes:
+ |-------------------------------------------------------------------------
+ */
+
+Route::group(['middleware' => ['auth', 'admin']], function () {
 
     /*
      * Version route:
@@ -149,12 +178,6 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::get('files/delete/{name}', 'FilesController@destroy');
 
 });
-
-/*
- * News:
- */
-
-Route::get('news/{url}', 'NewsController@show');
 
 /*
  * Pages:
