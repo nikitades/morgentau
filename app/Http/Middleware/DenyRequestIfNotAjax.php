@@ -29,9 +29,9 @@ class DenyRequestIfNotAjax
      */
     public function handle($request, Closure $next, $guard = null)
     {
-//        if (!Request::ajax()) {
-//            dd('The request is not AJAX');
-//        }
+        if (!Request::ajax()) {
+            dd('The request is not AJAX');
+        }
         return $next($request);
     }
 }
