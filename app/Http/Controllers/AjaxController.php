@@ -55,7 +55,7 @@ class AjaxController extends Controller
      */
     public static function test($args)
     {
-        return [$args];
+        return [['asd' => 'asdas']]; //TODO: сделать возврат тру/фолс в ajax. Чтобы ajax понимал
     }
 
     /**

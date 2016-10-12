@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ elixir('css/admin.css') }}">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
     <script src="{{ elixir('js/admin.js') }}"></script>
-    <script src="/ckeditor/ckeditor.js"></script>
+    <script src="/js/ckeditor.js"></script>
     @yield('embed')
 </head>
 <body>

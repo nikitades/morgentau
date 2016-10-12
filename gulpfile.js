@@ -34,6 +34,7 @@ elixir(function(mix) {
         'libs/bootstrap.min.js',
         'libs/select2.full.min.js',
         'libs/jquery-ui.min.js',
+        'engine.js',
         'admin.js'
     ], 'public/js/admin.js', 'resources/assets/js');
 
@@ -59,6 +60,7 @@ elixir(function(mix) {
         'libs/jquery.min.js',
         'libs/jquery-ui.min.js',
         'libs/bootstrap.min.js',
+        'engine.js',
         'app.js'
     ], 'public/js/app.js', 'resources/assets/js');
 
@@ -75,5 +77,4 @@ elixir(function(mix) {
         'public/css/admin-pages-list.css',
         'public/js/app.js'
     ]);
-
 });
