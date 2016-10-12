@@ -7,7 +7,7 @@
 @stop
 
 @section('items')
-    <table class="table list">
+    <table class="table table-hover list">
         <thead>
         <th width="1%"></th>
         <th width="25%">Название</th>

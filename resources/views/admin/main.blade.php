@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ elixir('css/admin.css') }}">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
     <script src="{{ elixir('js/admin.js') }}"></script>
-    <script src="/js/ckeditor.js"></script>
+    <script src="/js/ckeditor/ckeditor.js"></script>
     @yield('embed')
 </head>
 <body>
@@ -29,12 +29,15 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/logout">{{ trans('global.exit') }}</a></li>
             </ul>
+            @include('partials.sidebar', ['classes' => 'nav navbar-nav navbar-right hidden-sm'])
         </div>
     </div>
 </nav>
-<div id="content">
-    @include('partials.sidebar')
-    <div class="col-sm-8 main">
+<div id="content" class="container">
+    <div class="col-sm-2 col-xs-12 sidebar no-side-padding">
+        @include('partials.sidebar', ['classes' => 'nav nav-sidebar'])
+    </div>
+    <div class="col-xs-12 col-sm-10 main">
         @if (isset($title))
             <h1>{{ $title }}</h1>
         @endif

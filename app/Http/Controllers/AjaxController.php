@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Facades\Ajax;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 
 class AjaxController extends Controller
 {
@@ -22,6 +24,9 @@ class AjaxController extends Controller
         ]
     ];
 
+    public static $data = [];
+    public static $errors = [];
+
     /**
      * Executes the ajax-assigned method in the requested controller.
      *
@@ -35,7 +40,7 @@ class AjaxController extends Controller
         $controller = self::$interfaces[$route]['controller'];
         if (method_exists($controller, $method) && isset($controller::$async) && isset($controller::$async[$method])) {
             //TODO: implement the `conditions` handling
-            return self::answer(...$controller::$method(Input::all()));
+            return self::answer($controller::$method(Input::all()));
         } else {
             return self::deny();
         }
@@ -47,15 +52,22 @@ class AjaxController extends Controller
      * 2. Add its entry to the $async of the controller
      * 3. Check if the controller has its alias in the $interfaces of the AjaxController
      *
+     * You can set all the output data to the Ajax::$data array. The same for the Ajax:$errors. The bool val the function
+     * returns is the decision maker on what callback type would be called.
+     *
      * KEEP IN MIND: the function should return either an array of single element or an array of data and HTTP code of the response.
      * The default HTTP code is 200.
      *
      * @param $args
-     * @return array
+     * @return bool
      */
     public static function test($args)
     {
-        return [['asd' => 'asdas']]; //TODO: сделать возврат тру/фолс в ajax. Чтобы ajax понимал
+        Ajax::$data['test'] = true;
+        Ajax::$data['works'] = 'yes';
+        Ajax::$data['args'] = $args;
+        Ajax::$errors['err'] = 'yeah';
+        return false;
     }
 
     /**
@@ -77,10 +89,14 @@ class AjaxController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function answer()
+    public static function answer($status)
     {
-        $data = func_get_args();
-        if (!isset($data[1]) || !is_int($data[1])) $data[1] = 200;
-        return response()->json($data);
+        $result = [
+            'status' => $status,
+            'data' => Ajax::$data,
+            'errors' => Ajax::$errors
+        ];
+        if (Request::header('to') != '') $result['html'] = view('auth.login')->render();
+        return response()->json($result);
     }
 }
