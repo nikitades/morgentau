@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class File extends Model
+class File extends CustomModel
 {
     const FILE_MAX_FILESIZE = 16384;
     const FILE_PREFIX = 'file';

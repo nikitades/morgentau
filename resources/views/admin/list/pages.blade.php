@@ -10,40 +10,14 @@
     <a href="/admin/pages/new" class="buffer-25 btn btn-md btn-success">Добавить</a>
 @stop
 
+{{--//TODO: 2. Сделать контроллер новой сортировки 3. Сделать JS-функцию сортировки страниц--}}
+
 @section('items')
-    <ul class="pages-table">
-        <li class="item header">
-            <div class="item--icon">
-
-            </div>
-            <div class="item--name">
-                <p>Название</p>
-            </div>
-            <div class="item--view">
-                <p>Отображение</p>
-            </div>
-            <div class="item--url">
-                <p>Адрес</p>
-            </div>
-            <div class="item--controls">
-            </div>
-        </li>
+    <ul class="pages-list list-group entity-sortable entity-sortable-page">
         @if (!$tree[0])
-            <li class="item header">
-                <div class="item--icon">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                </div>
-                <div class="item--name">
+            <li class="sortable-item">
+                <div class="item-content">
                     <p>Ошибка! Нет элементов</p>
-                </div>
-                <div class="item--view">
-
-                </div>
-                <div class="item--url">
-
-                </div>
-                <div class="item--controls">
-
                 </div>
             </li>
         @else

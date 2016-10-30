@@ -6,6 +6,8 @@ use App\Http\Requests;
 use App\Facades\Ajax;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
+use phpDocumentor\Reflection\Types\Boolean;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 class AjaxController extends Controller
 {
@@ -15,6 +17,9 @@ class AjaxController extends Controller
         ],
         'admin' => [
             'controller' => 'App\Http\Controllers\AdminController'
+        ],
+        'pages' => [
+            'controller' => 'App\Http\Controllers\PagesController'
         ]
     ];
 
@@ -67,7 +72,7 @@ class AjaxController extends Controller
         Ajax::$data['works'] = 'yes';
         Ajax::$data['args'] = $args;
         Ajax::$errors['err'] = 'yeah';
-        return false;
+        return 'asd';
     }
 
     /**
@@ -89,14 +94,17 @@ class AjaxController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function answer($status)
+    public static function answer($ok)
     {
+        if (!is_bool($ok)) throw new InternalErrorException('The given status variable is not a boolean');
         $result = [
-            'status' => $status,
+            'status' => $ok,
             'data' => Ajax::$data,
-            'errors' => Ajax::$errors
+            'errors' => Ajax::$errors,
+            'debug' => env('APP_DEBUG'),
+            'debug_messages' => Ajax::$debug
         ];
-        if (Request::header('to') != '') $result['html'] = view('auth.login')->render();
-        return response()->json($result);
+        if (Request::header('to') != '' && isset(Ajax::$html) && Ajax::$html != '') $result['html'] = Ajax::$html;
+        return response()->json($result)->header('123', 'error');
     }
 }

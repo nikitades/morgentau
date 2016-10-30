@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta id="initial_debug" content="{{( isset($debug) ? json_encode($debug) : '')}}">
     <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
     <title>{{ $page->name }}</title>

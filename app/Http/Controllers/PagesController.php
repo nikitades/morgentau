@@ -12,6 +12,7 @@ use App\Http\Controllers\FilesController;
 use App\Page;
 use App\View;
 use App\Text;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Session;
 
@@ -19,6 +20,9 @@ class PagesController extends Controller
 {
 
     public static $url_stack = [];
+    public static $async = [
+        'dropSort' => []
+    ];
 
     /**
      * Display a listing of the resource.
@@ -294,6 +298,56 @@ class PagesController extends Controller
             }
         }
         return redirect('/admin/pages');
+    }
+
+    public static function dropSort($json_data)
+    {
+        //валидация
+        $validation = validate_true_with_message([
+            [
+                'check' => isset($json_data['order']),
+                'message' => 'Не передан ордер!'
+            ],
+        ]);
+        if ($validation !== true) return error($validation);
+        if (!Auth::user()->admin) return error('Доступ запрещен');
+
+        //заполняем список
+        $ids = [];
+        foreach ($json_data['order'] as $item) {
+            if (is_array($item)) {
+                $ids[] = $item['id'];
+            }
+        }
+//        if (sizeof($roots) != 1) error('Неверное количество корневых страниц!');
+
+        //проходим переназначением данных
+        $pages = Page::whereIn('id', $ids)->get();
+        foreach ($pages as $page) {
+            $page->pos = $json_data['order'][$page->id]['n'];
+            if (isset($json_data['order'][$page->id]['parent'])) {
+                $page->parent_id = $json_data['order'][$page->id]['parent'];
+            }
+            $page->save();
+        }
+        self::recountData();
+        ah(view('partials.treepage', ['tree' => Page::tree()]));
+        return true;
+    }
+
+    public static function recountData()
+    {
+        $pages = Page::all();
+        foreach ($pages as $page) {
+            $real_level = -1;
+            $searching_page = $page;
+            while ($parent = Page::where('id', $searching_page->parent_id)->first()) {
+                $real_level++;
+                $searching_page = $parent;
+            }
+            $page->real_level = $real_level;
+            $page->save();
+        }
     }
 
     /**

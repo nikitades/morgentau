@@ -2,12 +2,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Page;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
 
     public static $async = [
-        'move' => []
+        'reorder' => [],
+        'reorderPages' => []
     ];
 
     /**
@@ -28,16 +31,16 @@ class AdminController extends Controller
     public static function sidebar()
     {
         return [
-            'Главная'               => '/admin',
-            'split1'                     => '',
-            'Новости'               => '/admin/news',
-            'split2'                    => '',
-            'Страницы'              => '/admin/pages',
-            'Отображения'           => '/admin/views',
-            'Тексты'                => '/admin/texts',
-            'split3'                    => '',
-            'Настройки'             => '/admin/settings',
-            'Резервные копии'       => '/admin/backups',
+            'Главная' => '/admin',
+            'split1' => '',
+            'Новости' => '/admin/news',
+            'split2' => '',
+            'Страницы' => '/admin/pages',
+            'Отображения' => '/admin/views',
+            'Тексты' => '/admin/texts',
+            'split3' => '',
+            'Настройки' => '/admin/settings',
+            'Резервные копии' => '/admin/backups',
         ];
     }
 
@@ -50,12 +53,12 @@ class AdminController extends Controller
     public static function names($name)
     {
         $names = [
-            'pages'                 => 'Page',
-            'views'                 => 'View',
-            'texts'                 => 'Text',
-            'news'                  => 'NewsItem',
-            'settings'              => 'Setting',
-            'backups'               => 'Backup',
+            'pages' => 'Page',
+            'views' => 'View',
+            'texts' => 'Text',
+            'news' => 'NewsItem',
+            'settings' => 'Setting',
+            'backups' => 'Backup',
         ];
         return $names[$name];
     }
@@ -69,10 +72,10 @@ class AdminController extends Controller
      */
     public function entity($entity, $view = false)
     {
-        $item = 'App\\'.self::names($entity);
+        $item = 'App\\' . self::names($entity);
         $data = $item::adminList()->get();
         $view = $view ? $view : $entity;
-        return view('admin.list.'.$view, ['entity' => $entity, 'data' => $data, 'title' => array_search($entity, self::sidebar())]);
+        return view('admin.list.' . $view, ['entity' => $entity, 'data' => $data, 'title' => array_search($entity, self::sidebar())]);
     }
 
     /**
@@ -83,10 +86,10 @@ class AdminController extends Controller
      */
     public function create($entity)
     {
-        $class = 'App\\'.self::names($entity);
+        $class = 'App\\' . self::names($entity);
         $item = new $class;
-        $action = property_exists($item, 'controller') ? $item->controller.'@store' : (ucfirst($entity).'Controller@store');
-        return view('admin.edit.'.$entity, [
+        $action = property_exists($item, 'controller') ? $item->controller . '@store' : (ucfirst($entity) . 'Controller@store');
+        return view('admin.edit.' . $entity, [
             'item' => $item,
             'type' => 'create',
             'entity' => $entity,
@@ -106,10 +109,10 @@ class AdminController extends Controller
      */
     public function edit($entity, $id)
     {
-        $class = 'App\\'.self::names($entity);
+        $class = 'App\\' . self::names($entity);
         $item = $class::findOrFail($id);
-        $action = property_exists($item, 'controller') ? $item->controller.'@update' : (ucfirst($entity).'Controller@update');
-        return view('admin.edit.'.$entity, [
+        $action = property_exists($item, 'controller') ? $item->controller . '@update' : (ucfirst($entity) . 'Controller@update');
+        return view('admin.edit.' . $entity, [
             'item' => $item,
             'type' => 'edit',
             'entity' => $entity,
@@ -130,7 +133,7 @@ class AdminController extends Controller
      */
     public function move($redirect, $id, $direction)
     {
-        $entity = 'App\\'.self::names($redirect);
+        $entity = 'App\\' . self::names($redirect);
         $items = $entity::all();
         $item = $entity::findOrFail($id);
         $existing = $entity::where('pos', $direction == 'up' ? $item->pos - 1 : $item->pos + 1)->first();
@@ -142,7 +145,36 @@ class AdminController extends Controller
                 $existing->save();
             }
         }
-        return redirect('/admin/'.$redirect);
+        return redirect('/admin/' . $redirect);
+    }
+
+    public static function reorder($json_data)
+    {
+        $validation = validate_true_with_message([
+            [
+                'check' => isset($json_data['entity']),
+                'message' => 'Не передана сущность!'
+            ],
+            [
+                'check' => $json_data['entity'] !== 'false',
+                'message' => 'Сущность не тру'
+            ],
+            [
+                'check' => isset($json_data['order']),
+                'message' => 'Не передан ордер!'
+            ],
+        ]);
+        if ($validation !== true) return error($validation);
+        if (!Auth::user()->admin) return error('Доступ запрещен');
+        $items = $json_data['entity']::whereIn('id', $json_data['order'])->get();
+        if (!sizeof($items)) return error('Пустой сортируемый список!');
+        foreach ($items as $index => &$item) {
+            $item['pos'] = array_search($item->id, $json_data['order']);
+            $item->save();
+        }
+        $entity_name = strtolower($items->first()->getShortClass());
+        ah(view('admin.iteration.' . $entity_name, ['items' => $items->sortBy('pos')])->render());
+        return true;
     }
 
     /**
@@ -158,11 +190,11 @@ class AdminController extends Controller
         $images = [];
         if (method_exists($class, $type)) {
             foreach ($class::$type() as $name => $entityText) {
-                $entity = 'App\\'.$entityText;
+                $entity = 'App\\' . $entityText;
                 $images[] = [
-                    'name'      => $name,
-                    'list'      => $entity::attachmentTo($item->id)->get(),
-                    'entity'    => $entityText
+                    'name' => $name,
+                    'list' => $entity::attachmentTo($item->id)->get(),
+                    'entity' => $entityText
                 ];
             }
         }

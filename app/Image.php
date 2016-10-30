@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Image extends Model
+class Image extends CustomModel
 {
 
     const IMAGE_MAX_FILESIZE = 8192;
@@ -45,7 +43,7 @@ class Image extends Model
         return '/images/delete/' . $this->id;
     }
 
-    public function source() //TODO: коммитнуть эту тему
+    public function source()
     {
         return $this->hasOne('App\Image', 'id', 'image_id');
     }

@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Page extends Model
+class Page extends CustomModel
 {
     const ROOT_PAGE_NAME = '--корневая страница--';
 

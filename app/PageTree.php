@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class PageTree extends Model
+class PageTree extends CustomModel
 {
     protected $fillable = [
         'ancestor',

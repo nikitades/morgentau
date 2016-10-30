@@ -1,0 +1,101 @@
+/*-------------------------------
+
+	POPUP.CSS
+
+-------------------------------*/
+
+.popup_back {
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1050;
+}
+
+.popup_cont {
+  position: fixed;
+  overflow-y: scroll;
+  visibility: hidden;
+  text-align: center;
+  top: 0;
+  left: 0;
+  right: -7px;
+  bottom: 0;
+  z-index: 1051;
+}
+
+.popup_content {
+  margin: 0 auto;
+}
+
+.preloader {
+  z-index: 101;
+}
+
+/*---------------------
+
+	EDIT BELOW
+
+*/
+
+.popup_close {
+  color: #888;
+  cursor: pointer;
+  position: absolute;
+  padding: 5px;
+  right: 5px;
+  top: 0;
+}
+
+.popup_close:hover {
+  color: #111;
+}
+
+.popup_back {
+  cursor: pointer;
+  background-color: #222;
+}
+
+div.popup {
+  background: #fff;
+  padding: 25px;
+  box-shadow: 0 3px 10px #222;
+  display: inline-block;
+  overflow-x: scroll;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  visibility: hidden;
+}
+
+div.popup_scroller {
+  visibility: visible;
+}
+
+.preloader {
+  left: 50%;
+  margin: -10px 0 0 -25px;
+  position: fixed;
+  top: 50%;
+}
+
+.noscroll {
+  overflow: hidden;
+}
+
+/* morgentau popup styles: */
+
+.morgentau-popup {
+  background: white;
+  position: relative;
+  padding: 25px 10px;
+  overflow: hidden;
+}
+
+.morgentau-popup-content {
+  text-align: left;
+}
+
+.morgentau-popup-modal-heading {
+  margin: 10px auto;
+}

@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Backup extends Model
+class Backup extends CustomModel
 {
     const FOLDER = 'backups';
 

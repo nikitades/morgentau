@@ -18,7 +18,7 @@ class Controller extends BaseController
      *
      * @param $items
      */
-    public function reorderItems($items, $i = 1)
+    public static function reorderItems($items, $i = 1)
     {
         foreach ($items as $item) {
             $item->pos = $i++;

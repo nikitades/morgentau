@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Date extends Model
+class Date extends CustomModel
 {
     public static function fullDate($date, $lang = 'ru') {
 

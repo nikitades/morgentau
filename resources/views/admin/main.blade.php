@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=10, maximum-scale=1">
-    <title>Администрирование</title>
+    <meta id="initial_debug" content="{{( isset($debug) ? json_encode($debug) : '')}}">
+    <title>@yield('title', 'Администрирование')</title>
     <link rel="stylesheet" href="{{ elixir('css/admin.css') }}">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
     <script src="{{ elixir('js/admin.js') }}"></script>

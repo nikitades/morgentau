@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class View extends Model
+class View extends CustomModel
 {
     const PAGE_VIEWS_FOLDER = '../resources/views/pages/';
 

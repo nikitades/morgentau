@@ -8,6 +8,8 @@ class Ajax extends Facade
 
     public static $data;
     public static $errors;
+    public static $html;
+    public static $debug;
 
     protected static function getFacadeAccessor()
     {

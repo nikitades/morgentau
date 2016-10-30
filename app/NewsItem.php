@@ -3,9 +3,8 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 
-class NewsItem extends Model
+class NewsItem extends CustomModel
 {
     protected $table = 'news';
 
