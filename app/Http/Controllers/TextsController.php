@@ -42,7 +42,7 @@ class TextsController extends Controller
         $items = Text::all();
         $item->pos = sizeof($items) + 1;
         $item->save();
-        return $this->cleverRedirect($request, '/admin/texts');
+        return clever_redirect($request, '/admin/texts');
     }
 
     /**
@@ -78,7 +78,7 @@ class TextsController extends Controller
     {
         $item = Text::findOrFail($id);
         $item->fill($request->all())->save();
-        return $this->cleverRedirect($request, '/admin/texts');
+        return clever_redirect($request, '/admin/texts');
     }
 
     /**

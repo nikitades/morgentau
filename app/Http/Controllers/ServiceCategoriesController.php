@@ -42,9 +42,8 @@ class ServiceCategoriesController extends Controller
         $items = ServiceCategory::all();
         $item->pos = sizeof($items) + 1;
         $item->save();
-        $ic = new ImagesController();
-        $ic->saveImages($request, $item);
-        return $this->cleverRedirect($request, '/admin/service_categories');
+        ImagesController::saveImages($request, $item);
+        return clever_redirect($request, '/admin/service_categories');
     }
 
     /**
@@ -80,9 +79,8 @@ class ServiceCategoriesController extends Controller
     {
         $item = ServiceCategory::findOrFail($id);
         $item->fill($request->all())->save();
-        $ic = new ImagesController();
-        $ic->saveImages($request, $item);
-        return $ic->reposition($request, $item, '/admin/service_categories');
+        ImagesController::saveImages($request, $item);
+        return clever_redirect($request, '/admin/service_categories');
     }
 
     /**

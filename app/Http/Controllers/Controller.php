@@ -110,9 +110,4 @@ class Controller extends BaseController
         return false;
     }
 
-    public function cleverRedirect($request, $url = false)
-    {
-        return redirect($request->direction == 'stay' ? $request->current_url : $url);
-    }
-
 }

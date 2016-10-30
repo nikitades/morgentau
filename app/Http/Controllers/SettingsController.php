@@ -42,7 +42,7 @@ class SettingsController extends Controller
         $items = Setting::all();
         $item->pos = sizeof($items) + 1;
         $item->save();
-        return $this->cleverRedirect($request, '/admin/settings');
+        return clever_redirect($request, '/admin/settings');
     }
 
     /**
@@ -78,7 +78,7 @@ class SettingsController extends Controller
     {
         $item = Setting::findOrFail($id);
         $item->fill($request->all())->save();
-        return $this->cleverRedirect($request, '/admin/settings');
+        return clever_redirect($request, '/admin/settings');
     }
 
     /**

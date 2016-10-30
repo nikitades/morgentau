@@ -42,7 +42,7 @@ class ServicesController extends Controller
         $items = Service::all();
         $item->pos = sizeof($items) + 1;
         $item->save();
-        return $this->cleverRedirect($request, '/admin/services');
+        return clever_redirect($request, '/admin/services');
     }
 
     /**
@@ -78,7 +78,7 @@ class ServicesController extends Controller
     {
         $item = Service::findOrFail($id);
         $item->fill($request->all())->save();
-        return $this->cleverRedirect($request, '/admin/services');
+        return clever_redirect($request, '/admin/services');
     }
 
     /**

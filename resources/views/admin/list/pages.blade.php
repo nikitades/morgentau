@@ -10,8 +10,6 @@
     <a href="/admin/pages/new" class="buffer-25 btn btn-md btn-success">Добавить</a>
 @stop
 
-{{--//TODO: 2. Сделать контроллер новой сортировки 3. Сделать JS-функцию сортировки страниц--}}
-
 @section('items')
     <ul class="pages-list list-group entity-sortable entity-sortable-page">
         @if (!$tree[0])

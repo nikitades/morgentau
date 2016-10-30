@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Faq;
-use App\Http\Requests\CreateFaqRequest;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -37,7 +35,7 @@ class FaqController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateFaqRequest $request)
+    public function store(Request $request)
     {
         $faq = new Faq($request->all());
         $faq->save();
@@ -77,7 +75,7 @@ class FaqController extends Controller
     {
         $item = Faq::findOrFail($id);
         $item->fill($request->all())->save();
-        return $this->cleverRedirect($request, '/admin/faq');
+        return clever_redirect($request, '/admin/faq');
     }
 
     /**
@@ -90,6 +88,6 @@ class FaqController extends Controller
     {
         $item = Faq::findOrFail($id);
         $item->delete();
-        return redirect('/admin/views');
+        return redirect('/admin/faq');
     }
 }

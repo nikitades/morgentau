@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Text;
 use Illuminate\Http\Request;
 
 use App\NewsItem;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Session;
 
@@ -51,13 +49,15 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param $url
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function show($url)
     {
-        $item = NewsItem::where('newsitem_url', $url)->firstOrFail();
-        return view('pages.newsItem', compact('item'));
+        $item = $page = NewsItem::where('newsitem_url', $url)->firstOrFail();
+        $page->name = $page->title;
+        return view('pages.newsItem', compact('item', 'page'));
     }
 
     /**
