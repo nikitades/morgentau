@@ -59,7 +59,7 @@ var ADMIN = function () {
             });
             m.ajax({
                 url: '/ajax/admin/reorder/',
-                to: $(e.target).data('to'),
+                to: e.target,
                 data: {
                     entity: $(e.target).data('entity') || false,
                     order: order
