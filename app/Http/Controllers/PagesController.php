@@ -59,7 +59,6 @@ class PagesController extends Controller
         $item->pos = sizeof($pages) + 1;
         $item->full_url = $item->createUrl();
         $item->save();
-        $item->save();
         $this->reorderItems(Page::where('parent_id', $item->parent_id)->orderBy('pos')->get());
         ImagesController::saveImages($request, $item);
         FilesController::saveFiles($request, $item);
