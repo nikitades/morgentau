@@ -4,6 +4,17 @@ namespace App;
 
 class File extends CustomModel
 {
+    protected $fillable = [
+        'parent_id',
+        'ext',
+        'mime',
+        'size',
+        'content',
+        'name',
+        'original_name',
+        'pos',
+    ];
+
     const FILE_MAX_FILESIZE = 16384;
     const FILE_PREFIX = 'file';
     const FILE_FOLDER = '/files';
@@ -23,6 +34,10 @@ class File extends CustomModel
         'fb2',
         'epub',
         'webm',
+        'gif',
+        'jpg',
+        'jpeg',
+        'png'
     ];
 
     public static $required_files_folders = [
@@ -33,6 +48,11 @@ class File extends CustomModel
     public function url()
     {
         return self::FILE_STASH.'/'.$this->filename;
+    }
+
+    public function sourceFile()
+    {
+        return $this->hasOne('App\File', 'id', 'file_id');
     }
 
     public function deleteUrl()

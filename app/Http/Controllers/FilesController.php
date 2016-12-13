@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\File as Basefile;
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Intervention\Image\Facades\Image;
 
 class FilesController extends Controller
 {
+
+    const FAKE_NAMES = true;
+    const NO_SUCCESS_MESSAGES = true;
+
     /**
      * Display a listing of the resource.
      *
@@ -101,7 +101,7 @@ class FilesController extends Controller
     public static function deleteFile($id)
     {
         $file = Basefile::findOrFail($id);
-        $filepath = '.'.Basefile::FILE_STASH.'/'.$file->filename;
+        $filepath = '.' . Basefile::FILE_STASH . '/' . $file->filename;
         if (file_exists($filepath)) {
             unlink($filepath);
         } else {
@@ -130,7 +130,7 @@ class FilesController extends Controller
      * @param $request
      * @param $item
      */
-    public static function saveFiles($request, $item)
+    public static function saveFiles($request, $item, $fakeNames = false, $no_messages = false)
     {
         self::checkRequiredFilesFolders();
         foreach ($request->file() as $fileFieldName => $file) {
@@ -152,9 +152,13 @@ class FilesController extends Controller
 
             //assigning the fields
             $fileItem = new Basefile;
-            
-            $filename = $file->getClientOriginalName();
-            if (file_exists('.'.Basefile::FILE_STASH.'/'.$filename)) {
+
+            $filename = $fakeNames ?
+                bin2hex(openssl_random_pseudo_bytes(32)) . '.' . $file->getClientOriginalExtension() :
+                $file->getClientOriginalName();
+
+
+            if (file_exists('.' . Basefile::FILE_STASH . '/' . $filename)) {
                 return redirect()->back()->withErrors([Lang::get('global.file-already-exists')]);
             }
 
@@ -179,7 +183,7 @@ class FilesController extends Controller
             $file_link->file_id = $fileItem->id;
             $file_link->save();
 
-            Session::flash('success-message', Lang::get('global.successfully-saved'));
+            if (!$no_messages) Session::flash('success-message', Lang::get('global.successfully-saved'));
         }
     }
 }

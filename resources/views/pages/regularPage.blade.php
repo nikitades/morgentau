@@ -4,10 +4,15 @@
     <link rel="stylesheet" href="{{ elixir('css/regularPage.css') }}">
 @stop
 
-@section('content')
+@section('precontent')
     @include('pages.partials.breadcrumbs')
+@stop
+
+@section('content')
     @yield('before-body')
-    <h3>Page body</h3>
-    <img src="https://i.ytimg.com/vi/prALrHUJ8Ns/hqdefault.jpg" alt="koteek">
+    <h3>{{$page->header}}</h3>
+    <div class="page_body">
+        {!! $page->page_content !!}
+    </div>
     @yield('after-body')
 @stop

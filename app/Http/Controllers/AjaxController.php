@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use App\Facades\Ajax;
+use App\Http\Requests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Request;
-use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 class AjaxController extends Controller
@@ -37,15 +36,16 @@ class AjaxController extends Controller
      *
      * @param $route
      * @param $method
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function run($route, $method)
+    public function run($route, $method, Request $request)
     {
         if (!isset(self::$interfaces[$route])) return self::deny();
         $controller = self::$interfaces[$route]['controller'];
         if (method_exists($controller, $method) && isset($controller::$async) && isset($controller::$async[$method])) {
             //TODO: implement the `conditions` handling
-            return self::answer($controller::$method(Input::all()));
+            return self::answer($controller::$method(Input::all(), $request), $request);
         } else {
             return self::deny();
         }
@@ -85,16 +85,19 @@ class AjaxController extends Controller
         return response()->json([
             'success' => false,
             'message' => 'no controller'
-        ], 404 );
+        ], 404);
     }
 
     /**
      * The function to give the correct AJAX answer.
      * Accepts one or two arguments got from the func_get_args and replacing the
      *
+     * @param $ok
+     * @param $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws InternalErrorException
      */
-    public static function answer($ok)
+    public static function answer($ok, $request)
     {
         if (!is_bool($ok)) throw new InternalErrorException('The given status variable is not a boolean');
         $result = [
@@ -104,7 +107,7 @@ class AjaxController extends Controller
             'debug' => env('APP_DEBUG'),
             'debug_messages' => Ajax::$debug
         ];
-        if (Request::header('to') != '' && isset(Ajax::$html) && Ajax::$html != '') $result['html'] = Ajax::$html;
+        if ($request->header('to') != '' && isset(Ajax::$html) && Ajax::$html != '') $result['html'] = Ajax::$html;
         return response()->json($result)->header('123', 'error');
     }
 }

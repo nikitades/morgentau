@@ -5,7 +5,7 @@ var m = function () {
     };
 
     var initial_debug = function () {
-        if ($('#initial_debug').attr('content') != '') console.warn(JSON.parse($('#initial_debug').attr('content')));
+        if ($('#initial_debug').length && $('#initial_debug').attr('content') != '') console.warn(JSON.parse($('#initial_debug').attr('content')));
     };
 
     var ajax = function (options) {
@@ -32,6 +32,14 @@ var m = function () {
         }
 
         options = options || {};
+        options = $.extend({
+            type: 'POST',
+            method: 'POST'
+        }, options);
+        options.headers = options.headers || {};
+        options.headers = $.extend({
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }, options.headers);
         options.correct_ending = false;
         if (options.to) {
             showPreloader();
@@ -66,7 +74,6 @@ var m = function () {
             }
         };
         options.error = function (e) {
-            console.warn(e);
             hidePreloader();
             m.modal({
                 heading: 'Ошибка AJAX-соединения',
@@ -127,7 +134,7 @@ var m = function () {
             (options.heading != '' ? '<h2>' + options.heading + '</h2>' : '') +
             '</div>' +
             (options.content != '' ? '<div class="morgentau-popup-content ' + options.content_custom_class + '">' + options.content +
-            '</div>' : '') +
+                '</div>' : '') +
             (options.confirmation ? '<div class="morgentau-popup-confirmation"><h2 class="morgentau-popup-modal-heading"">' + options.confirmation.phrase + '</h2><a href="javascript: void(0)" class="btn btn-success morgentau-popup-confirmation-yes">Подтвердить</a><a href="javascript: void(0)" class="btn btn-warning morgentau-popup-confirmation-no">Отмена</a></div>' : '') +
             (options.acceptance ? '<div class="morgentau-popup-acceptance"><h2 class="morgentau-popup-modal-heading"">' + options.acceptance.phrase + '</h2><a href="javascript: void(0)" class="btn btn-success morgentau-popup-acceptance-yes">OK</a></div>' : '') +
             '</div>' +

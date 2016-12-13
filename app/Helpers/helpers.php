@@ -67,21 +67,27 @@ if (!function_exists('clever_redirect')) {
 }
 
 if (!function_exists('error')) {
-    function error($str) {
+    function error($str)
+    {
         Ajax::$errors[] = $str;
         return false;
     }
 }
 
 if (!function_exists('ar')) {
-    function ar($str) {
-        Ajax::$errors[] = $str;
+    function ar($str)
+    {
+        $args = func_get_args();
+        if (sizeof($args) == 2) {
+            Ajax::$errors[$args[0]] = $args[1];
+        } else Ajax::$errors[] = $args[0];
         return false;
     }
 }
 
 if (!function_exists('ad')) {
-    function ad() {
+    function ad()
+    {
         $args = func_get_args();
         if (sizeof($args) == 2) {
             Ajax::$debug[$args[0]] = $args[1];
@@ -90,26 +96,61 @@ if (!function_exists('ad')) {
     }
 }
 
+if (!function_exists('ajax')) {
+    function ajax($data)
+    {
+        $args = func_get_args();
+        if (sizeof($args) == 2) {
+            Ajax::$data[$args[0]] = $args[1];
+        } else Ajax::$data[] = $args[0];
+        return true;
+    }
+}
+
 if (!function_exists('ah')) {
-    function ah($data) {
+    function ah($data)
+    {
         Ajax::$html[] = $data;
         return true;
     }
 }
 
 if (!function_exists('check_if_multidimensional_array')) {
-    function check_if_multidimensional_array($array) {
+    function check_if_multidimensional_array($array)
+    {
         return count($array) == count($array, COUNT_RECURSIVE);
     }
 }
 
 if (!function_exists('validate_true_with_message')) {
-    function validate_true_with_message($items) {
+    function validate_true_with_message($items)
+    {
         if (!is_array($items[0]) || isset($items['item'])) $items = [$items];
         $result = [];
         foreach ($items as $item) {
             if ($item['check'] !== true) $result[] = $item['message'];
         }
         return sizeof($result) ? $result : true;
+    }
+}
+
+function imagecreatefromfile($filename)
+{
+    if (!file_exists($filename)) {
+        throw new InvalidArgumentException('File "' . $filename . '" not found.');
+    }
+    switch (exif_imagetype($filename)) {
+        case IMAGETYPE_GIF:
+            return imagecreatefromgif($filename);
+            break;
+        case IMAGETYPE_JPEG:
+            return imagecreatefromjpeg($filename);
+            break;
+        case IMAGETYPE_PNG:
+            return imagecreatefrompng($filename);
+            break;
+        default:
+            return false;
+            break;
     }
 }
