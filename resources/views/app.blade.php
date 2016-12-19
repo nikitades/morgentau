@@ -16,7 +16,8 @@
 <div id="header" class="container">
     <div class="row">
         <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -30,15 +31,15 @@
             </ul>
         </div><!--/.nav-collapse -->
     </div>
-    @yield('precontent')
-    <div id="document" class="container">
-        <div class="row">
-            <div id="content" class="col-xs-12">
-                @yield('content')
-            </div>
-            <div id="footer"></div>
+</div>
+@yield('precontent')
+<div id="document" class="container">
+    <div class="row">
+        <div id="content" class="col-xs-12">
+            @yield('content')
         </div>
     </div>
+    <div id="footer"></div>
 </div>
 </body>
 </html>

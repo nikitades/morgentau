@@ -4,6 +4,6 @@
 @stop
 
 @section('content')
-    <h1>Morgentau CMS</h1>
-    <h3>Everything's running fine.</h3>
+    <h1>{{$page->header}}</h1>
+    <p>{!! $page->page_content !!}</p>
 @stop
