@@ -32,6 +32,7 @@
                         </label>
                     </div>
                 </div>
+                @include('partials.errors')
                 <button type="submit" class="btn btn-primary btn-block">
                     Вход
                 </button>
