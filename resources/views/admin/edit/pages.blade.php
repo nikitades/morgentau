@@ -1,31 +1,29 @@
 @extends('admin.edit')
 
 @section('headers')
-    <h1>{{ $type == 'create' ? 'Создание' : 'Редактирование' }} страницы, миу миу</h1>
-    <h3 class="sub-header buffer-25">{{ $type == 'create' ? 'Задайте свойства создаваемой страницы' : 'Измените свойства редактируемой страницы' }}</h3>
+    <h4 class="sub-header buffer-25">{{ $type == 'create' ? 'Задайте свойства создаваемой страницы' : 'Измените свойства редактируемой страницы' }}</h4>
 @stop
 
 @section('fields')
-    <h2 class="buffer-25">{{ $item->name }}</h2>
+    <div class="buffer-25">
+        <code>Заголовок:</code>
+        <h2>{{ $item->name }}</h2>
+    </div>
     <div class="form-group col-xs-12">
         @if ($item->full_url != '')
-            <pre style="display: inline-block;"><a
-                        href="{{ $item->full_url }}">{{ $item->full_url }}</a>
-</pre>
+            <code><a href="{{ $item->full_url }}">{{ $item->full_url }}</a></code>
         @endif
     </div>
     <div class="form-group">
-        {!! Form::label('is_active_visible', 'Видима?', ['class' => 'control-label col-sm-12']) !!}
+        {!! Form::label('is_active', 'Видима?', ['class' => 'control-label col-sm-12']) !!}
         <div class="col-sm-10 input-holder">
-            {!! Form::checkbox('is_active', 0, 1, ['class' => 'form-control hidden']) !!}
-            {!! Form::checkbox('is_active', 1, $type == 'create' ? 1 : $item->is_active, ['id' => 'is_active_visible']) !!}
+            {!! Form::checkbox('is_active', 1, $type == 'create' ? 1 : $item->is_active, ['id' => 'is_active']) !!}
         </div>
     </div>
     <div class="form-group">
-        {!! Form::label('is_in_menu_visible', 'В меню', ['class' => 'control-label col-sm-12']) !!}
+        {!! Form::label('is_in_menu', 'В меню', ['class' => 'control-label col-sm-12']) !!}
         <div class="col-sm-12 input-holder">
-            {!! Form::checkbox('is_in_menu', 0, 1, ['class' => 'form-control hidden']) !!}
-            {!! Form::checkbox('is_in_menu', 1, $type == 'create' ? 1 : $item->is_in_menu, ['id' => 'is_in_menu_visible']) !!}
+            {!! Form::checkbox('is_in_menu', 1, $type == 'create' ? 1 : $item->is_in_menu, ['id' => 'is_in_menu']) !!}
         </div>
     </div>
     <div class="form-group">
@@ -33,8 +31,8 @@
         <div class="col-sm-12 ancestors-select">{!! Form::select('parent_id', $hierarchy->showList($item->parent_id, $item->id), $item->parent_id, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
-        {!! Form::label('view', 'Отображ.', ['class' => 'control-label col-sm-12']) !!}
-        <div class="col-sm-12">{!! Form::select('view', $views, isset($views[$item->view]) ? $item->view : null, ['class' => 'form-control']) !!}</div>
+        {!! Form::label('view', 'Шаблон', ['class' => 'control-label col-sm-12']) !!}
+        <div class="col-sm-12">{!! Form::select('view', $views, isset($views[$item->view]) ? $item->view : null, ['class' => 'form-control', 'size' => sizeof($views)]) !!}</div>
     </div>
     <div class="form-group">
         {!! Form::label('name', 'Название', ['class' => 'control-label col-sm-12']) !!}
@@ -62,7 +60,7 @@
     </div>
     @if(sizeof($images))
         <hr>
-        @each('partials.attached-image', $images, 'images')
+        @each('partials.attached-image', $images, 'attached_image_type')
     @endif
     @if(sizeof($files))
         {{ sizeof($images) ? '' : '<hr>' }}

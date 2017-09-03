@@ -15,10 +15,9 @@
         <div class="col-sm-12">{!! Form::text('code', $item->code, ['class' => 'form-control']) !!}</div>
     </div>
     <div class="form-group">
-        {!! Form::label('html_visible', 'Wysiwyg', ['class' => 'control-label col-sm-12']) !!}
+        {!! Form::label('html', 'Wysiwyg', ['class' => 'control-label col-sm-12']) !!}
         <div class="col-sm-11 input-holder">
-            {!! Form::checkbox('html', 0, 1, ['class' => 'form-control hidden']) !!}
-            {!! Form::checkbox('html', 1, $type == 'create' ? 1 : $item->html, ['id' => 'html_visible']) !!}
+            {!! Form::checkbox('html', 1, $type == 'create' ? 1 : $item->html, ['id' => 'html']) !!}
         </div>
     </div>
     <div class="form-group">

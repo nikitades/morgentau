@@ -13,6 +13,10 @@ class Text extends CustomModel
         'pos'
     ];
 
+    protected $checkboxes = [
+        'html'
+    ];
+
     public function scopeAdminList($query)
     {
         return $query->where('name', '!=', '""')->orderBy('pos');

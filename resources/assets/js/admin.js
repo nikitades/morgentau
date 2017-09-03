@@ -73,7 +73,7 @@ var ADMIN = function () {
             var order = [];
             order = sortable.findChildren(order, $(e.target));
             m.ajax({
-                url: '/ajax/pages/dropSort/',
+                url: '/ajax/admin/pages/dropSort/',
                 to: $(e.target).parent(),
                 data: {
                     order: order
@@ -82,7 +82,6 @@ var ADMIN = function () {
                     sortable.create($(e.target).parent().find(sortable.selector));
                 }
             });
-            console.info('yippika-yay!');
         },
         findChildren: function (order, item) {
             $(item).find('.sortable-item').each($.proxy(function (i, el) {

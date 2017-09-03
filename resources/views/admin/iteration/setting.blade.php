@@ -3,28 +3,26 @@
         <li class="list-group-item clearfix" data-entity-id="{{$item->id}}">
             <div class="item-content">
                 <div class="admin-entry-item admin-entry-logo block">
-                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                    @include('partials.fa', ['code' => 'fa-file-o'])
                 </div>
-                <div class="admin-entry-item admin-entry-content">
-                    <a href="/admin/settings/{{ $item->id }}/edit" class="btn btn-xs btn-link">
+                <div class="admin-entry-item admin-entry-content" style="margin: 0 15px 0 0;">
+                    <a href="/admin/settings/{{ $item->id }}/edit">
                         {{ $item->name }}
                     </a>
                 </div>
-                <div class="admin-entry-item admin-entry-content">
-                    <a href="/admin/settings/{{ $item->id }}/edit" class="btn btn-xs btn-link">
-                        {{ $item->code }}
-                    </a>
+                <div class="admin-entry-item admin-entry-content" style="margin: 0 15px 0 0;">
+                        <code style="font-size: 12px;">{{ $item->code }}</code>
                 </div>
                 <div class="admin-entry-item admin-entry-controls">
-                    <a href="javascript: void(0)" class="btn btn-xs btn-link dragger-handle" style="cursor: move;">
-                        <i class="glyphicon glyphicon-sort"></i>
+                    <a href="javascript: void(0)" class="btn btn-sm btn-link dragger-handle" style="cursor: move;">
+                        @include('partials.fa', ['code' => 'fa-sort'])
                     </a>
-                    <a href="/admin/settings/{{ $item->id }}/edit" class="btn btn-xs btn-link">
-                        <i class="glyphicon glyphicon-edit"></i>
+                    <a href="/admin/settings/{{ $item->id }}/edit" class="btn btn-sm btn-default btn-outline-primary">
+                        @include('partials.fa', ['code' => 'fa-edit'])
                     </a>
                     {!! Form::open(['action' => ['SettingsController@destroy', $item->id], 'method' => 'delete']) !!}
-                    <button type="submit" onclick="return confirm('Вы уверены?')" class="btn btn-xs btn-link red">
-                        <i class="glyphicon glyphicon-trash"></i>
+                    <button type="submit" onclick="return confirm('Вы уверены?')" class="btn btn-sm btn-link red">
+                        @include('partials.fa', ['code' => 'fa-trash-o'])
                     </button>
                     {!! Form::close() !!}
                 </div>

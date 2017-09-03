@@ -2,50 +2,45 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Авторизация</title>
-    <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
+    <link rel="stylesheet" href="{{ elixir('css/admin.css') }}">
 </head>
-<body>
+<body class="bg-dark">
 <div class="container">
-    <div class="col-xs-8 col-xs-offset-2 buffer-50">
-        <form class="form-horizontal" role="form" method="POST" action="/login">
-            {{ csrf_field() }}
-
-            <div class="form-group">
-                <label class="col-md-4 control-label">Электронная почта</label>
-                <div class="col-md-6">
-                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-header">
+            Авторизация
+        </div>
+        <div class="card-body">
+            <form method="POST" action="/login">
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <label for="email">Электронная почта</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}"
+                           placeholder="ivan@divan.ru">
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-4 control-label">Пароль</label>
-                <div class="col-md-6">
-                    <input type="password" class="form-control" name="password">
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Пароль">
                 </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-6 col-md-offset-4">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="remember"> Запомнить
+                <div class="form-group">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="remember">
+                            Запомнить
                         </label>
                     </div>
                 </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    Вход
+                </button>
+            </form>
+            <div class="text-center">
+                <a class="d-block small mt-3" href="/register">Зарегистрироваться</a>
+                {{--<a class="d-block small" href="forgot-password.html">Forgot Password?</a>--}}
             </div>
-
-            <div class="form-group">
-                <div class="col-md-6 col-md-offset-4">
-                    <button type="submit" class="btn btn-primary" style="margin-right: 15px;">
-                        Вход
-                    </button>
-
-                    <a href="/password/email">Забыли пароль?</a>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 </body>

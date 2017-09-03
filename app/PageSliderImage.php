@@ -20,7 +20,7 @@ class PageSliderImage extends Image
     public function scopeAttachmentTo($query, $id)
     {
         $select_fields = [
-            'page_slider_images.id',
+            'images.id',
             'page_slider_images.pos',
             'images.name',
             'images.filename'

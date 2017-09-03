@@ -23,23 +23,29 @@ elixir(function(mix) {
 
     mix.styles([
         'libs/bootstrap.min.css',
-        'libs/bootstrap-theme.min.css',
+        'libs/bootstrap-reboot.min.css',
         'libs/select2.min.css',
         'libs/jquery-ui.structure.min.css',
         'libs/jquery-ui.min.css',
         'libs/jquery-ui.theme.min.css',
+        'libs/sb-admin.css',
+        'libs/font-awesome.min.css',
+        'libs/dataTables.bootstrap4.css',
         'sunny.css',
         'modal.css',
         'admin.css',
     ], 'public/css/admin.css', 'resources/assets/css');
 
     mix.scripts([
-        'libs/jquery.min.js',
-        'libs/bootstrap.min.js',
-        'libs/select2.full.min.js',
+        'libs/jquery.js',
         'libs/jquery-ui.min.js',
-        'libs/simple-popup.min.js',
         'libs/jquery.mjs.nestedSortable.js',
+        'libs/jquery.cookie.js',
+        'libs/popper.min.js',
+        'libs/select2.full.min.js',
+        'libs/simple-popup.min.js',
+        'libs/bootstrap.min.js',
+        'libs/sb-admin.js',
         'engine.js',
         'admin.js'
     ], 'public/js/admin.js', 'resources/assets/js');
@@ -56,7 +62,6 @@ elixir(function(mix) {
 
     mix.styles([
         'libs/bootstrap.min.css',
-        'libs/bootstrap-theme.min.css',
         'libs/jquery-ui.structure.min.css',
         'libs/jquery-ui.min.css',
         'libs/jquery-ui.theme.min.css',
@@ -66,7 +71,7 @@ elixir(function(mix) {
     ], 'public/css/app.css', 'resources/assets/css');
 
     mix.scripts([
-        'libs/jquery.min.js',
+        'libs/jquery.js',
         'libs/jquery-ui.min.js',
         'libs/bootstrap.min.js',
         'libs/simple-popup.min.js',

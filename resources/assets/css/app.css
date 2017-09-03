@@ -1,11 +1,13 @@
 /* Useful snippets: */
 .buffer-25 {
   margin-top: 25px;
-  margin-bottom: 25px; }
+  margin-bottom: 25px;
+}
 
 .buffer-50 {
   margin-top: 50px;
-  margin-bottom: 50px; }
+  margin-bottom: 50px;
+}
 
 .clearfix:after {
   visibility: hidden;
@@ -13,6 +15,16 @@
   font-size: 0;
   content: " ";
   clear: both;
-  height: 0; }
+  height: 0;
+}
+
+[id^="vkshare"] a {
+  box-sizing: content-box !important;
+  -webkit-box-sizing: content-box !important;
+}
+
+.fa-m {
+  vertical-align: middle;
+}
 
 /*# sourceMappingURL=app.css.map */

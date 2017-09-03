@@ -20,7 +20,7 @@
     </div>
     <div class="form-group">
         {!! Form::label('type', 'Тип', ['class' => 'control-label col-sm-12']) !!}
-        <div class="col-sm-12">{!! Form::select('type', $item->types(), $item->type, ['class' => 'form-control']) !!}</div>
+        <div class="col-sm-12">{!! Form::select('type', $item->types(), $item->type, ['class' => 'form-control', 'size' => sizeof($item->types())]) !!}</div>
     </div>
     @if ($type == 'edit')
         @if ($item->type == 'string')

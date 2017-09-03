@@ -37,15 +37,15 @@ var m = function () {
             method: 'POST'
         }, options);
         options.headers = options.headers || {};
-        options.headers = $.extend({
+        options.headers = $.extend(options.headers, {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }, options.headers);
+        });
         options.correct_ending = false;
         if (options.to) {
             showPreloader();
-            options.headers = {
+            options.headers = $.extend(options.headers, {
                 'to': options.to,
-            };
+            });
         }
         options.success = function (result) {
             if (typeof result == 'string') {

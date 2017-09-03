@@ -1,8 +1,8 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Page;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -31,16 +31,41 @@ class AdminController extends Controller
     public static function sidebar()
     {
         return [
-            'Главная' => '/admin',
-            'split1' => '',
-            'Новости' => '/admin/news',
-            'split2' => '',
-            'Страницы' => '/admin/pages',
-            'Отображения' => '/admin/views',
-            'Тексты' => '/admin/texts',
-            'split3' => '',
-            'Настройки' => '/admin/settings',
-            'Резервные копии' => '/admin/backups',
+            'Admin' => [
+                'url' => '/admin',
+                'icon' => 'fa-dashboard',
+                'title' => 'Админка'
+            ],
+            'NewsItem' => [
+                'url' => '/admin/news',
+                'icon' => 'fa-newspaper-o',
+                'title' => 'Новости'
+            ],
+            'Page' => [
+                'url' => '/admin/pages',
+                'icon' => 'fa-file',
+                'title' => 'Страницы'
+            ],
+            'View' => [
+                'url' => '/admin/views',
+                'icon' => 'fa-file-o',
+                'title' => 'Отображения'
+            ],
+            'Text' => [
+                'url' => '/admin/texts',
+                'icon' => 'fa-font',
+                'title' => 'Тексты'
+            ],
+            'Setting' => [
+                'url' => '/admin/settings',
+                'icon' => 'fa-gears',
+                'title' => 'Настройки'
+            ],
+            'Backup' => [
+                'url' => '/admin/backups',
+                'icon' => 'fa-rotate-left',
+                'title' => 'Резервные копии'
+            ]
         ];
     }
 
@@ -75,7 +100,17 @@ class AdminController extends Controller
         $item = 'App\\' . self::names($entity);
         $data = $item::adminList()->get();
         $view = $view ? $view : $entity;
-        return view('admin.list.' . $view, ['entity' => $entity, 'data' => $data, 'title' => array_search($entity, self::sidebar())]);
+        return view('admin.list.' . $view, [
+            'entity' => $entity,
+            'data' => $data,
+            'title' => self::sidebar()[self::names($entity)]['title'],
+            'breadcrumbs' => [
+                [
+                    'segment' => $entity,
+                    'name' => self::sidebar()[self::names($entity)]['title']
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -97,6 +132,16 @@ class AdminController extends Controller
             'method' => 'POST',
             'images' => $this->fetchAttachments('images', $class, $item),
             'files' => $this->fetchAttachments('files', $class, $item),
+            'breadcrumbs' => [
+                [
+                    'segment' => $entity,
+                    'name' => self::sidebar()[self::names($entity)]['title']
+                ],
+                [
+                    'segment' => 'new',
+                    'name' => 'Создание'
+                ],
+            ]
         ]);
     }
 
@@ -120,6 +165,16 @@ class AdminController extends Controller
             'method' => 'PUT',
             'images' => $this->fetchAttachments('images', $class, $item),
             'files' => $this->fetchAttachments('files', $class, $item),
+            'breadcrumbs' => [
+                [
+                    'segment' => $entity,
+                    'name' => self::sidebar()[self::names($entity)]['title']
+                ],
+                [
+                    'segment' => 'new',
+                    'name' => 'Редактирование'
+                ],
+            ]
         ]);
     }
 

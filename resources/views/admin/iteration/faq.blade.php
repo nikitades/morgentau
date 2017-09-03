@@ -3,7 +3,7 @@
         <li class="list-group-item clearfix" data-entity-id="{{$item->id}}">
             <div class="item-content">
                 <div class="admin-entry-item admin-entry-logo block">
-                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                    @include('partials.fa', ['code' => 'fa-file'])
                 </div>
                 <div class="admin-entry-item admin-entry-content" style="margin: 0 15px;">
                 <span>
@@ -16,12 +16,12 @@
                     </a>
                 </div>
                 <div class="admin-entry-item admin-entry-controls">
-                    <a href="/admin/news/{{ $item->id }}/edit" class="btn btn-xs btn-link">
-                        <i class="glyphicon glyphicon-edit"></i>
+                    <a href="/admin/news/{{ $item->id }}/edit" class="btn btn-sm btn-link">
+                        @include('partials.fa', ['code' => 'fa-edit'])
                     </a>
                     {!! Form::open(['action' => ['FaqController@destroy', $item->id], 'method' => 'delete']) !!}
-                    <button type="submit" onclick="return confirm('Вы уверены?')" class="btn btn-xs btn-link red">
-                        <i class="glyphicon glyphicon-trash"></i>
+                    <button type="submit" onclick="return confirm('Вы уверены?')" class="btn btn-sm btn-link red">
+                        @include('partials.fa', ['code' => 'fa-trash-o'])
                     </button>
                     {!! Form::close() !!}
                 </div>

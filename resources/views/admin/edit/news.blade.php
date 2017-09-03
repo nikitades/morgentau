@@ -1,5 +1,9 @@
 @extends('admin.edit')
 
+@section('title')
+    {{ $type == 'create' ? 'Создание' : 'Редактирование' }} новости
+@stop
+
 @section('headers')
     <h1>{{ $type == 'create' ? 'Создание' : 'Редактирование' }} новости</h1>
     <h3 class="sub-header buffer-25">{{ $type == 'create' ? 'Внесите данные создаваемой новости' : 'Измените содержимое существующей новости' }}</h3>
@@ -26,7 +30,7 @@
     </div>
     @if(sizeof($images))
         <hr>
-        @each('partials.attached-image', $images, 'images')
+        @each('partials.attached-image', $images, 'attached_image_type')
     @endif
     <script>
         $(document).ready(function () {

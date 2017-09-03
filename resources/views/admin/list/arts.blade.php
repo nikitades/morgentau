@@ -17,8 +17,7 @@
         @foreach($data as $item)
             <tr>
                 <td>
-                    <span class="glyphicon glyphicon-file {{ $item->is_active ? '' : 'page_not_active' }}"
-                          aria-hidden="true"></span>
+                    @include('partials.fa', ['code' => 'fa-file' . ($item->is_active ? '' : ' page_not_active'))
                 </td>
                 <td>
                     <a href="/admin/arts/{{ $item->id }}/edit">
@@ -32,15 +31,15 @@
                 </td>
                 <td class="controls">
                     <div>
-                        <a href="/arts/{{ $item->id }}/hot" class="btn btn-xs btn-link">
-                            <i class="glyphicon glyphicon-star{{ $item->hot ? '' : '-empty' }}"></i>
+                        <a href="/arts/{{ $item->id }}/hot" class="btn btn-sm btn-link">
+                            @include('partials.fa', ['code' => 'fa-star' . ($item->hot ? '' : ' o'))
                         </a>
-                        <a href="/admin/arts/{{ $item->id }}/edit" class="btn btn-xs btn-link">
-                            <i class="glyphicon glyphicon-edit"></i>
+                        <a href="/admin/arts/{{ $item->id }}/edit" class="btn btn-sm btn-link">
+                            @include('partials.fa', ['code' => 'fa-edit')
                         </a>
                         <a href="/arts/{{ $item->id }}/delete" onclick="return confirm('Вы уверены?')"
-                           class="btn btn-xs btn-link red">
-                            <i class="glyphicon glyphicon-trash"></i>
+                           class="btn btn-sm btn-link red">
+                            @include('partials.fa', ['code' => 'fa-trash')
                         </a>
                     </div>
                 </td>

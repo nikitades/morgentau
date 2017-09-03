@@ -5,8 +5,7 @@
 @stop
 
 @section('headers')
-    <h1>Тексты сайта</h1>
-    <h3 class="sub-header">Список всех текстов для страниц сайта</h3>
+    <h4 class="sub-header">Список всех текстов для страниц сайта</h4>
     <a href="/admin/texts/new" class="buffer-25 btn btn-md btn-success">Добавить</a>
 @stop
 

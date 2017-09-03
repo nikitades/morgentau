@@ -1,8 +1,7 @@
 @extends('admin.list')
 
 @section('headers')
-    <h1>Отображения страниц</h1>
-    <h3 class="sub-header">Отображение - это файл, заключающий в себе то, как будет выглядеть эта страница на сайте</h3>
+    <h4 class="sub-header">Отображение - это шаблон страницы</h4>
     <a href="/admin/views/new" class="buffer-25 btn btn-md btn-success">Добавить</a>
 @stop
 

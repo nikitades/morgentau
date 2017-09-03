@@ -175,7 +175,6 @@ td.controls form {
 }
 
 .admin-entry-item.admin-entry-logo {
-  float: left;
   margin-right: 5px;
 }
 
@@ -320,4 +319,8 @@ ol.example li.placeholder {
 }
 ol.example li.placeholder:before {
   position: absolute;
+}
+
+.fa-m {
+  vertical-align: middle;
 }

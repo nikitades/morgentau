@@ -23,6 +23,11 @@ class Page extends CustomModel
         'pos'
     ];
 
+    protected $checkboxes = [
+        'is_active',
+        'is_in_menu'
+    ];
+
     public function scopeAdminList($query)
     {
         return $query->where('is_root', '!=', 1)->orderBy('pos');
